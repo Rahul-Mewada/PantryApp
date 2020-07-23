@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E061EAB24C8BE1400F66269 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E061EAA24C8BE1400F66269 /* LandingView.swift */; };
+		7E061EAD24C8CB0900F66269 /* AddIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E061EAC24C8CB0900F66269 /* AddIngredientsView.swift */; };
+		7E061EAF24C9010800F66269 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E061EAE24C9010800F66269 /* ViewRouter.swift */; };
+		7E98452824BE17D200CC5309 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E98452724BE17D200CC5309 /* ColorExtension.swift */; };
 		7ED5179B24BCB51C0023FB79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED5179A24BCB51C0023FB79 /* AppDelegate.swift */; };
 		7ED5179D24BCB51C0023FB79 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED5179C24BCB51C0023FB79 /* SceneDelegate.swift */; };
 		7ED517A024BCB51C0023FB79 /* PantryApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7ED5179E24BCB51C0023FB79 /* PantryApp.xcdatamodeld */; };
-		7ED517A224BCB51C0023FB79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED517A124BCB51C0023FB79 /* ContentView.swift */; };
+		7ED517A224BCB51C0023FB79 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED517A124BCB51C0023FB79 /* HomeView.swift */; };
 		7ED517A424BCB51E0023FB79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ED517A324BCB51E0023FB79 /* Assets.xcassets */; };
 		7ED517A724BCB51E0023FB79 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ED517A624BCB51E0023FB79 /* Preview Assets.xcassets */; };
 		7ED517AA24BCB51E0023FB79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ED517A824BCB51E0023FB79 /* LaunchScreen.storyboard */; };
 		7ED517B524BCB51E0023FB79 /* PantryAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED517B424BCB51E0023FB79 /* PantryAppTests.swift */; };
 		7ED517C024BCB51E0023FB79 /* PantryAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED517BF24BCB51E0023FB79 /* PantryAppUITests.swift */; };
+		7ED517CE24BCBE8E0023FB79 /* PantryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED517CD24BCBE8E0023FB79 /* PantryModel.swift */; };
+		7ED517D024BCFEE20023FB79 /* PantryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED517CF24BCFEE20023FB79 /* PantryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,11 +42,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E061EAA24C8BE1400F66269 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
+		7E061EAC24C8CB0900F66269 /* AddIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientsView.swift; sourceTree = "<group>"; };
+		7E061EAE24C9010800F66269 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
+		7E98452724BE17D200CC5309 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		7ED5179724BCB51C0023FB79 /* PantryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PantryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED5179A24BCB51C0023FB79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7ED5179C24BCB51C0023FB79 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7ED5179F24BCB51C0023FB79 /* PantryApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PantryApp.xcdatamodel; sourceTree = "<group>"; };
-		7ED517A124BCB51C0023FB79 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7ED517A124BCB51C0023FB79 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7ED517A324BCB51E0023FB79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7ED517A624BCB51E0023FB79 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7ED517A924BCB51E0023FB79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +61,8 @@
 		7ED517BB24BCB51E0023FB79 /* PantryAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PantryAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED517BF24BCB51E0023FB79 /* PantryAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryAppUITests.swift; sourceTree = "<group>"; };
 		7ED517C124BCB51E0023FB79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7ED517CD24BCBE8E0023FB79 /* PantryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryModel.swift; sourceTree = "<group>"; };
+		7ED517CF24BCFEE20023FB79 /* PantryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +90,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E2D7CA724C8BB52007216CF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7ED517CD24BCBE8E0023FB79 /* PantryModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7E2D7CA824C8BB6F007216CF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7ED517CF24BCFEE20023FB79 /* PantryViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		7E2D7CAA24C8BBB1007216CF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7ED517A124BCB51C0023FB79 /* HomeView.swift */,
+				7E061EAA24C8BE1400F66269 /* LandingView.swift */,
+				7E061EAC24C8CB0900F66269 /* AddIngredientsView.swift */,
+				7E061EAE24C9010800F66269 /* ViewRouter.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7E98452624BE17B200CC5309 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7E98452724BE17D200CC5309 /* ColorExtension.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		7ED5178E24BCB51C0023FB79 = {
 			isa = PBXGroup;
 			children = (
@@ -101,13 +148,16 @@
 		7ED5179924BCB51C0023FB79 /* PantryApp */ = {
 			isa = PBXGroup;
 			children = (
-				7ED5179A24BCB51C0023FB79 /* AppDelegate.swift */,
-				7ED5179C24BCB51C0023FB79 /* SceneDelegate.swift */,
-				7ED517A124BCB51C0023FB79 /* ContentView.swift */,
+				7E2D7CAA24C8BBB1007216CF /* Views */,
+				7E2D7CA824C8BB6F007216CF /* ViewModels */,
+				7E2D7CA724C8BB52007216CF /* Models */,
 				7ED517A324BCB51E0023FB79 /* Assets.xcassets */,
 				7ED517A824BCB51E0023FB79 /* LaunchScreen.storyboard */,
 				7ED517AB24BCB51E0023FB79 /* Info.plist */,
 				7ED5179E24BCB51C0023FB79 /* PantryApp.xcdatamodeld */,
+				7ED5179A24BCB51C0023FB79 /* AppDelegate.swift */,
+				7ED5179C24BCB51C0023FB79 /* SceneDelegate.swift */,
+				7E98452624BE17B200CC5309 /* Resources */,
 				7ED517A524BCB51E0023FB79 /* Preview Content */,
 			);
 			path = PantryApp;
@@ -270,9 +320,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ED517CE24BCBE8E0023FB79 /* PantryModel.swift in Sources */,
 				7ED517A024BCB51C0023FB79 /* PantryApp.xcdatamodeld in Sources */,
 				7ED5179B24BCB51C0023FB79 /* AppDelegate.swift in Sources */,
-				7ED517A224BCB51C0023FB79 /* ContentView.swift in Sources */,
+				7ED517A224BCB51C0023FB79 /* HomeView.swift in Sources */,
+				7E061EAB24C8BE1400F66269 /* LandingView.swift in Sources */,
+				7E061EAF24C9010800F66269 /* ViewRouter.swift in Sources */,
+				7E061EAD24C8CB0900F66269 /* AddIngredientsView.swift in Sources */,
+				7ED517D024BCFEE20023FB79 /* PantryViewModel.swift in Sources */,
+				7E98452824BE17D200CC5309 /* ColorExtension.swift in Sources */,
 				7ED5179D24BCB51C0023FB79 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
