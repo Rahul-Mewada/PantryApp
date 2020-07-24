@@ -7,8 +7,8 @@
 //
 
 
-//TODO - Add the bottom bar
-//TODO - create a way to add ingredients
+
+
 //TODO - status of ingredients and difficulty of recipies need to be colored accordingly
 //TODO - Font resizing. They seem too big
 
@@ -77,26 +77,6 @@ struct HomeView: View {
     }
 }
 
-//MARK:- Bottom Navigation Bar Component
-//struct bottomNavBar: View {
-//    var body: some View {
-//        ZStack {
-//
-//            ZStack {
-//                RoundedRectangle(cornerRadius: 1).frame(height: 90).foregroundColor(Color.themeForeground)
-//                HStack(spacing: (UIScreen.main.bounds.width/8)) {
-//                    Image(systemName: "square.and.pencil")
-//                    Image(systemName: "folder")
-//                    Image(systemName: "plus.circle.fill").font(.system(size: 48)).foregroundColor(Color.themeAccent).shadow(color: Color.themeAccent, radius: 2)
-//                    Image(systemName: "cart")
-//                    Image(systemName: "person")
-//
-//                }.padding(.bottom, 30).font(.system(size: 24))
-//            }
-//
-//        }
-//    }
-//}
 
 //MARK:- Horizontal Recipe Card View Component
 struct recipePantryView: View {
