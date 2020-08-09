@@ -60,7 +60,7 @@ struct HomeView: View {
                             RoundedRectangle(cornerRadius: 20).foregroundColor(Color.themeForeground)
                             VStack {
                                 ForEach(viewModel.ingredientsInPantry) {ingredient in
-                                ingredientPantryView(ingredient: ingredient)
+                                    ingredientPantryView(viewModel:self.viewModel, ingredient: ingredient)
                                 }
                             }
                             .padding()
@@ -111,24 +111,32 @@ struct recipePantryView: View {
 
 //MARK:- Veritcal Ingredient View
 struct ingredientPantryView :View {
-    let ingredient: PantryModel.Ingredient
+    @ObservedObject var viewModel: PantryViewModel
+    var ingredient: PantryModel.Ingredient
     var body: some View {
-        VStack {
-            HStack {
-             VStack(alignment: .leading) {
-                 Text("\(ingredient.name)")
-                 Text("\(ingredient.status.rawValue)")
-             }
-             Spacer()
-             VStack(alignment: .trailing) {
-                 Text("\(ingredient.measurement.value, specifier: "%.1f") \(ingredient.measurement.unit.symbol)")
-                Text("\(ingredient.category)")
-            
-             }
-               
-             }
-            Divider()
-        }.padding(.horizontal)
+        NavigationLink(destination: IngredientDetailsView(viewModel: self.viewModel, ingredient: self.ingredient)) {
+            VStack {
+                HStack {
+                 VStack(alignment: .leading) {
+                     Text("\(ingredient.name)")
+                     Text("\(ingredient.status.rawValue)")
+                 }
+                 Spacer()
+                 VStack(alignment: .trailing) {
+                     Text("\(ingredient.measurement.value, specifier: "%.1f") \(ingredient.measurement.unit.symbol)")
+                    Text("\(ingredient.category)")
+                
+                    }
+                    Image(systemName: "chevron.right")
+                        .padding(.leading, 10)
+                        .font(Font.body)
+                 }
+                Divider()
+            }
+            .foregroundColor(Color.black)
+        }
+        
+        
     }
 }
 

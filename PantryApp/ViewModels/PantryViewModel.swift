@@ -75,6 +75,18 @@ class PantryViewModel: ObservableObject {
         pantryModel.recipesInPantry
     }
     
+    var categoriesInPantry: Array<String> {
+        pantryModel.Categories
+    }
+    
+    var unitsMass: Array<String> {
+        pantryModel.unitsMass
+    }
+    
+    var unitsVol: Array<String> {
+        pantryModel.unitsVol
+    }
+    
     //MARK: - Intents(s)
     func addIngredientsToPantry(add ingredient: PantryModel.Ingredient) {
         pantryModel.addIngredientToPantry(ingredient: ingredient)
@@ -82,6 +94,10 @@ class PantryViewModel: ObservableObject {
     
     func addRecipeToPantry(add recipe: PantryModel.Recipe) {
         pantryModel.addRecipe(recipe: recipe)
+    }
+    
+    func addCategory(add category: String) {
+        pantryModel.addCategory(category: category)
     }
     
 }

@@ -19,10 +19,8 @@ struct PantryModel {
         var id: Int
         var category: String
         //TODO: Purchases
-        //TODO: Expirery Date
         //TODO: Average Repurchase time
     }
-    
     
     enum status: String {
         case out = "Out"
@@ -30,6 +28,12 @@ struct PantryModel {
         case stocked = "Stocked"
         case expired = "Expired"
     }
+    
+    var Categories: Array <String> = ["Meat", "Poultry", "Veggies", "Spices"]
+    
+    var unitsMass: Array<String> = ["grams (g)", "kilograms (kg)", "pounds (lb)", "ounces (oz)"]
+    var unitsVol: Array<String> = ["cups", "tablespoon (tbsp)", "teaspoons (tsp)", "liters (l)", "milliliters (ml)"]
+    //var unitsSingle: Int = 0
     
     var ingredientsInPantry: Array<Ingredient>
     var recipesInPantry: Array<Recipe>
@@ -67,6 +71,9 @@ struct PantryModel {
         self.recipesInPantry.append(recipe)
     }
     
+    mutating func addCategory(category: String) {
+        self.Categories.append(category)
+    }
     
     
 }

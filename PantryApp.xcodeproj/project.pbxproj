@@ -3,14 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		7E061EAB24C8BE1400F66269 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E061EAA24C8BE1400F66269 /* LandingView.swift */; };
-		7E061EAD24C8CB0900F66269 /* AddIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E061EAC24C8CB0900F66269 /* AddIngredientsView.swift */; };
+		7E061EAD24C8CB0900F66269 /* IngredientDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E061EAC24C8CB0900F66269 /* IngredientDetailsView.swift */; };
 		7E061EAF24C9010800F66269 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E061EAE24C9010800F66269 /* ViewRouter.swift */; };
 		7E9751CA24CA43A700298845 /* TestingPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751C924CA43A700298845 /* TestingPicker.swift */; };
+		7E9751CD24CB824700298845 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 7E9751CC24CB824700298845 /* PopupView */; };
+		7E9751CF24CCAB0200298845 /* AddIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751CE24CCAB0200298845 /* AddIngredientView.swift */; };
+		7E9751D224CCAB4400298845 /* topBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751D124CCAB4400298845 /* topBar.swift */; };
+		7E9751D424CCAB7F00298845 /* quantityPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751D324CCAB7F00298845 /* quantityPicker.swift */; };
+		7E9751D624CCABB400298845 /* statusSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751D524CCABB400298845 /* statusSelection.swift */; };
+		7E9751D824CCABF500298845 /* nameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751D724CCABF500298845 /* nameTextField.swift */; };
+		7E9751DA24CCADD800298845 /* expiresPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751D924CCADD800298845 /* expiresPicker.swift */; };
+		7E9751DC24CCAE3200298845 /* categoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9751DB24CCAE3200298845 /* categoryPicker.swift */; };
 		7E98452824BE17D200CC5309 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E98452724BE17D200CC5309 /* ColorExtension.swift */; };
 		7ED5179B24BCB51C0023FB79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED5179A24BCB51C0023FB79 /* AppDelegate.swift */; };
 		7ED5179D24BCB51C0023FB79 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED5179C24BCB51C0023FB79 /* SceneDelegate.swift */; };
@@ -44,9 +52,16 @@
 
 /* Begin PBXFileReference section */
 		7E061EAA24C8BE1400F66269 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
-		7E061EAC24C8CB0900F66269 /* AddIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientsView.swift; sourceTree = "<group>"; };
+		7E061EAC24C8CB0900F66269 /* IngredientDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientDetailsView.swift; sourceTree = "<group>"; };
 		7E061EAE24C9010800F66269 /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		7E9751C924CA43A700298845 /* TestingPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingPicker.swift; sourceTree = "<group>"; };
+		7E9751CE24CCAB0200298845 /* AddIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientView.swift; sourceTree = "<group>"; };
+		7E9751D124CCAB4400298845 /* topBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topBar.swift; sourceTree = "<group>"; };
+		7E9751D324CCAB7F00298845 /* quantityPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quantityPicker.swift; sourceTree = "<group>"; };
+		7E9751D524CCABB400298845 /* statusSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = statusSelection.swift; sourceTree = "<group>"; };
+		7E9751D724CCABF500298845 /* nameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nameTextField.swift; sourceTree = "<group>"; };
+		7E9751D924CCADD800298845 /* expiresPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = expiresPicker.swift; sourceTree = "<group>"; };
+		7E9751DB24CCAE3200298845 /* categoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = categoryPicker.swift; sourceTree = "<group>"; };
 		7E98452724BE17D200CC5309 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		7ED5179724BCB51C0023FB79 /* PantryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PantryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED5179A24BCB51C0023FB79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E9751CD24CB824700298845 /* PopupView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,13 +127,28 @@
 		7E2D7CAA24C8BBB1007216CF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7E9751D024CCAB1900298845 /* Components */,
 				7ED517A124BCB51C0023FB79 /* HomeView.swift */,
 				7E061EAA24C8BE1400F66269 /* LandingView.swift */,
-				7E061EAC24C8CB0900F66269 /* AddIngredientsView.swift */,
+				7E061EAC24C8CB0900F66269 /* IngredientDetailsView.swift */,
+				7E9751CE24CCAB0200298845 /* AddIngredientView.swift */,
 				7E061EAE24C9010800F66269 /* ViewRouter.swift */,
 				7E9751C924CA43A700298845 /* TestingPicker.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7E9751D024CCAB1900298845 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7E9751D124CCAB4400298845 /* topBar.swift */,
+				7E9751D324CCAB7F00298845 /* quantityPicker.swift */,
+				7E9751D524CCABB400298845 /* statusSelection.swift */,
+				7E9751D724CCABF500298845 /* nameTextField.swift */,
+				7E9751D924CCADD800298845 /* expiresPicker.swift */,
+				7E9751DB24CCAE3200298845 /* categoryPicker.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		7E98452624BE17B200CC5309 /* Resources */ = {
@@ -208,6 +239,9 @@
 			dependencies = (
 			);
 			name = PantryApp;
+			packageProductDependencies = (
+				7E9751CC24CB824700298845 /* PopupView */,
+			);
 			productName = PantryApp;
 			productReference = 7ED5179724BCB51C0023FB79 /* PantryApp.app */;
 			productType = "com.apple.product-type.application";
@@ -280,6 +314,9 @@
 				Base,
 			);
 			mainGroup = 7ED5178E24BCB51C0023FB79;
+			packageReferences = (
+				7E9751CB24CB824700298845 /* XCRemoteSwiftPackageReference "PopupView" */,
+			);
 			productRefGroup = 7ED5179824BCB51C0023FB79 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -323,17 +360,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E9751DA24CCADD800298845 /* expiresPicker.swift in Sources */,
+				7E9751D424CCAB7F00298845 /* quantityPicker.swift in Sources */,
 				7ED517CE24BCBE8E0023FB79 /* PantryModel.swift in Sources */,
+				7E9751D224CCAB4400298845 /* topBar.swift in Sources */,
 				7ED517A024BCB51C0023FB79 /* PantryApp.xcdatamodeld in Sources */,
 				7ED5179B24BCB51C0023FB79 /* AppDelegate.swift in Sources */,
 				7E9751CA24CA43A700298845 /* TestingPicker.swift in Sources */,
 				7ED517A224BCB51C0023FB79 /* HomeView.swift in Sources */,
 				7E061EAB24C8BE1400F66269 /* LandingView.swift in Sources */,
+				7E9751D824CCABF500298845 /* nameTextField.swift in Sources */,
 				7E061EAF24C9010800F66269 /* ViewRouter.swift in Sources */,
-				7E061EAD24C8CB0900F66269 /* AddIngredientsView.swift in Sources */,
+				7E9751DC24CCAE3200298845 /* categoryPicker.swift in Sources */,
+				7E061EAD24C8CB0900F66269 /* IngredientDetailsView.swift in Sources */,
 				7ED517D024BCFEE20023FB79 /* PantryViewModel.swift in Sources */,
 				7E98452824BE17D200CC5309 /* ColorExtension.swift in Sources */,
 				7ED5179D24BCB51C0023FB79 /* SceneDelegate.swift in Sources */,
+				7E9751CF24CCAB0200298845 /* AddIngredientView.swift in Sources */,
+				7E9751D624CCABB400298845 /* statusSelection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +696,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7E9751CB24CB824700298845 /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7E9751CC24CB824700298845 /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E9751CB24CB824700298845 /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		7ED5179E24BCB51C0023FB79 /* PantryApp.xcdatamodeld */ = {

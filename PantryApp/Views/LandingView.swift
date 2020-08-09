@@ -18,10 +18,10 @@ struct LandingView: View {
                 if self.viewRouter.currentView == "home" {
                     HomeView(viewModel: self.viewModel)
                 } else if self.viewRouter.currentView == "addIngredients" {
-                    AddIngredientsView()
+                    AddIngredientView(viewModel: self.viewModel)
                     Spacer()
                 }
-                customTab(geometry: geometry, viewRouter: self.viewRouter)
+                customTab(geometry: geometry, viewModel: self.viewModel, viewRouter: self.viewRouter)
             }
         }.edgesIgnoringSafeArea(.all)
     }
@@ -29,6 +29,7 @@ struct LandingView: View {
 
 struct customTab :View {
     let geometry: GeometryProxy
+    @ObservedObject var viewModel: PantryViewModel
     @ObservedObject var viewRouter: ViewRouter
     @State private var showIngredientsModalView: Bool = false
     var body: some View{
@@ -67,7 +68,7 @@ struct customTab :View {
                     }
                 .offset(y: -geometry.safeAreaInsets.bottom/3)
                 .sheet(isPresented: self.$showIngredientsModalView) {
-                  AddIngredientsView()
+                    AddIngredientView(viewModel: self.viewModel)
                 }
                     Spacer(minLength: 0)
                     
