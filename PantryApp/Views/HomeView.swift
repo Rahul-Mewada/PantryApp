@@ -42,6 +42,7 @@ struct HomeView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 1).foregroundColor(Color.themeBackground)
+                                    .frame(maxWidth: .infinity, maxHeight: 35)
                                 HStack(alignment: .lastTextBaseline, spacing: 24){
                                     Text("All Items").font(.system(size: 24))
                                     Text("Fridge")
@@ -119,12 +120,12 @@ struct ingredientPantryView :View {
                 HStack {
                  VStack(alignment: .leading) {
                      Text("\(ingredient.name)")
-                     Text("\(ingredient.status.rawValue)")
+                     Text("\(ingredient.status?.rawValue ?? "")")
                  }
                  Spacer()
                  VStack(alignment: .trailing) {
-                    Text("\(ingredient.measurement.value, specifier: "%.1f") \(ingredient.measurement.unit.symbol)")
-                    Text("\(ingredient.category)")
+                    returnMeasurement(ingredient: ingredient)
+                    Text("\(ingredient.category ?? "")")
                 
                     }
                     Image(systemName: "chevron.right")
@@ -135,8 +136,6 @@ struct ingredientPantryView :View {
             }
             .foregroundColor(Color.black)
         }
-        
-        
     }
 }
 
@@ -149,3 +148,27 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 
+func returnMeasurement(ingredient: PantryModel.Ingredient) -> some View {
+    switch ingredient.unitPref {
+    case .cup, .liter, .milliliter, .tablespoon, .teaspoon:
+        if let unwrappedMeasurement = ingredient.measurementVol {
+            return Text("\(unwrappedMeasurement.value, specifier: "%.1f") \(unwrappedMeasurement.unit.symbol)")
+        } else {
+            print("Error in unwrapping ingredient.measurementVol")
+            return Text("")
+        }
+    case .gram, .kilogram, .ounce, .pound:
+        if let unwrappedMeasurement = ingredient.measurementMass {
+            return Text("\(unwrappedMeasurement.value, specifier: "%.1f") \(unwrappedMeasurement.unit.symbol)")
+        } else {
+            print("Error in unwrapping ingredient.measurementVol")
+            return Text("")
+        }
+    case .unit:
+        if let unwrappedMeasurement = ingredient.measurementUnit {
+            return Text("\(unwrappedMeasurement, specifier: "%.0f") units")
+        } else {
+            return Text("")
+        }
+    }
+}

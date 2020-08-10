@@ -12,13 +12,9 @@ import Foundation
 
 struct expiresPicker: View {
     @State var showPicker: Bool = false
-    @Binding var expireDate: Date?
+    @Binding var expireDate: Date
+    @Binding var hasExpire: Bool
     
-    var dateValue: Date
-    init(expireDate: Binding<Date?>) {
-        self._expireDate = expireDate
-        self.dateValue = expireDate.wrappedValue!
-    }
     
     var body: some View {
         
@@ -28,40 +24,64 @@ struct expiresPicker: View {
         dateFormat.timeStyle = .none
         dateFormat.locale = Locale(identifier: "en_US")
         var dateString: String {
-            if let expDate = expireDate {
-               return dateFormat.string(from: expDate)
+            if hasExpire {
+                return dateFormat.string(from: expireDate)
             } else {
-                return "No Expire Date"
+                return "No Expirey Date"
             }
-            
         }
-        
         return VStack(spacing: 5) {
             Text("Expires")
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(Font.body)
             ZStack {
-                RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(Color.white)
-                    .frame(height: 35)
+//                RoundedRectangle(cornerRadius: 5)
+//                    .foregroundColor(Color.white)
+//                    .frame(height: 35)
                 VStack(spacing: 0) {
-                    HStack {
-                        Text("\(dateString)")
-                            .padding()
-                            .font(Font.subheadline)
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .rotationEffect(.degrees(showPicker ? 90 : 0))
-                            .padding()
+                    Button(action: {
+                        withAnimation(.spring()) {
+                            self.showPicker.toggle()
+                        }
+                        self.hasExpire = true
+                    }) {
+                        HStack {
+                            Text("\(dateString)")
+                                .padding()
+                                .font(Font.subheadline)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .rotationEffect(.degrees(showPicker ? 90 : 0))
+                                .padding()
+                        }
+                         .frame(height: 35)
+                         .foregroundColor(Color.black)
                     }
-                    .frame(height: 35)
-                    .foregroundColor(Color.black)
+                    
                    
                     if showPicker {
                        Divider().padding(.horizontal)
                        VStack(spacing: 0) {
-                           DatePicker("Date", selection: dateValue, displayedComponents: .date)
+                           DatePicker("Date", selection: $expireDate, displayedComponents: .date)
                            .labelsHidden()
+                        Button(action: {
+                            self.hasExpire = false
+                            withAnimation(.spring()) {
+                                self.showPicker = false
+                            }
+                        }) {
+                            ZStack {
+                                Color.orange
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                Text("No Expirey Date")
+                                    .foregroundColor(Color.white)
+                                    .font(Font.subheadline)
+                                    .padding(.vertical, 5)
+                            }
+                            .padding(.bottom)
+                            .padding(.horizontal)
+                            
+                        }
                        }
                            .background(Color.white)
                            .clipShape(RoundedRectangle(cornerRadius: 5))
@@ -70,11 +90,11 @@ struct expiresPicker: View {
             }
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
-                .onTapGesture {
-                    withAnimation(.spring()) {
-                        self.showPicker.toggle()
-                    }
-            }
+//                .onTapGesture {
+//                    withAnimation(.spring()) {
+//                        self.showPicker.toggle()
+//                    }
+//            }
         }
     }
 }

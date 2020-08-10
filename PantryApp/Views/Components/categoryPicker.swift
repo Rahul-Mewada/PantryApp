@@ -19,16 +19,18 @@ struct categoryPicker: View {
     var title: String
     var subtitle: String
     var contents: Array<String>
-    var prompt: String
+    var promptToEnter: String
+    var promptOnButton: String
     var addCategory: (String) -> ()
     
-    init(model: PantryViewModel, select: Binding<String>, title: String, subtitle: String, contents: Array<String>, prompt: String, funcToAddCat: @escaping (String) -> ()) {
+    init(model: PantryViewModel, select: Binding<String>, title: String, subtitle: String, contents: Array<String>, promptToEnter: String, promptOnButton: String, funcToAddCat: @escaping (String) -> ()) {
         self.viewModel = model
         self.title = title
         self._selectedCategory = select
         self.subtitle = subtitle
         self.contents = contents
-        self.prompt = prompt
+        self.promptToEnter = promptToEnter
+        self.promptOnButton = promptOnButton
         self.addCategory = funcToAddCat
     }
     
@@ -102,9 +104,9 @@ struct categoryPicker: View {
                             if showTextField {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        TextField("\(prompt)", text: $categoryName, onCommit: {
+                                        TextField("\(promptToEnter)", text: $categoryName, onCommit: {
                                             if self.categoryName != "" {
-                                                self.viewModel.addCategory(add: self.categoryName)
+                                                self.addCategory(self.categoryName)
                                                 self.selectCategory(select: self.categoryName)
                                                 self.categoryName = ""
                                                 self.showTextField = false
@@ -160,7 +162,7 @@ struct categoryPicker: View {
                                         Color.white
                                         HStack {
                                             Image(systemName: "plus.circle.fill")
-                                            Text("Add Category")
+                                            Text("\(promptOnButton)")
                                                 .font(Font.subheadline)
                                         }
                                         .foregroundColor(Color.green)

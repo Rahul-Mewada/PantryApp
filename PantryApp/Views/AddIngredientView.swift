@@ -17,12 +17,23 @@ struct AddIngredientView: View {
     
     @ObservedObject var viewModel: PantryViewModel
     @State var ingredientName:String = ""
-    @State var showQuantityPicker: Bool = false
-    @State var showExpiresPicker: Bool = false
-    @State var expireDate: Date? = Date()
+    
+    @State var expireDate: Date = Date()
+    @State var hasExpireDate: Bool = true
+    
     @State var quantityValue: String = "0"
+    @State var unit: PantryModel.unitPref = .gram
+    
     @State var selectedCategory: String = ""
     
+    @State var selectedStore: String = "No Preference"
+    @State var hasStore: Bool = true
+    
+    @State var passedIngredientNameField: Bool = true
+    @State var passedValueField: Bool = true
+    @State var passedCategoryField: Bool = true
+    
+    @State var isRecurring: Bool = true
     
     var body: some View {
         changeNavBarColor()
@@ -30,29 +41,53 @@ struct AddIngredientView: View {
             ScrollView {
                 ZStack {
                     VStack {
-//                        topBar()
-//                            .padding(.horizontal)
                         nameTextField(ingredientName: $ingredientName)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-                        quantityPicker(viewModel: viewModel, value: $quantityValue)
+                        quantityPicker(viewModel: viewModel, value: $quantityValue, unit: $unit)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-                        expiresPicker(expireDate: $expireDate)
+                        expiresPicker(expireDate: $expireDate, hasExpire: $hasExpireDate)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-//                        categoryPicker(viewModel: viewModel, selectedCategory: $selectedCategory)
-//                            .padding(.vertical, 5)
-//                            .padding(.horizontal)
-                        ZStack {
+                        categoryPicker(model: viewModel, select: $selectedCategory, title: "Category", subtitle: "Select Category", contents: viewModel.categoriesInPantry, promptToEnter: "Enter a new category", promptOnButton: "Add a category", funcToAddCat: viewModel.addCategory)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal)
+                        categoryPicker(model: viewModel, select: $selectedStore, title: "Store Preference", subtitle: "Select Store", contents: viewModel.storesInPantry, promptToEnter: "Enter a new store", promptOnButton: "Add a new store", funcToAddCat: viewModel.addStore)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal)
+                        recurringPicker(isRecurring: $isRecurring)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal)
+                        
+                        Button(action: {
+                            if self.acceptibleSubmission() == true {
+                                let doubleValue:Double = Double(self.quantityValue)!
+                                let ingredientToAdd: PantryModel.Ingredient = PantryModel.Ingredient(name: self.ingredientName,
+                                                                                                     value: doubleValue,
+                                                                                                     unit: self.unit,
+                                                                                                     status: .stocked,
+                                                                                                     category: self.selectedCategory,
+                                                                                                     storePref: (self.hasStore) ? self.selectedStore : nil,
+                                                                                                     recurring: self.isRecurring,
+                                                                                                     expireDate: (self.hasExpireDate) ? self.expireDate : nil,
+                                                                                                     isLiked: false)
+                                self.viewModel.addIngredientsToPantry(add: ingredientToAdd)
+                            }
+                            
+                        }) {
+                        ZStack() {
                             RoundedRectangle(cornerRadius: 5)
-                                .frame(height:35)
-                                .foregroundColor(Color.green)
-                                .shadow(color: Color.green, radius: 2)
-                                .padding(.horizontal)
-                                .padding(.top)
-                            Text("Add Recipe").foregroundColor(Color.white)
+                                .foregroundColor((acceptibleSubmission()) ? Color.green : Color.orange)
+                                .frame(height: 35)
+                                .padding()
+                                .shadow(color: (acceptibleSubmission()) ? Color.green : Color.orange, radius: 2)
+                            Text("Add Recipe")
+                                .foregroundColor(Color.white)
+                                .frame(alignment: .center)
+                           }
                         }
+                        
                         //Color.themeBackground.edgesIgnoringSafeArea(.all)
                         
                     }
@@ -76,10 +111,31 @@ struct AddIngredientView: View {
         
         
 }
+    
+    func acceptibleSubmission() -> Bool {
+        var isAccetible: Bool = true
+        let decimalCharacters = CharacterSet.decimalDigits
+        let nameRange = self.ingredientName.rangeOfCharacter(from: decimalCharacters)
+        
+        if self.ingredientName == "" || nameRange != nil {
+            isAccetible = false
+        }
+        
+        if Double(quantityValue) != nil {
+        } else {
+            isAccetible = false
+        }
+        
+        if selectedCategory == "" {
+            isAccetible = false
+        }
+        
+        return isAccetible
+    }
 }
 
-//struct AddIngredientView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddIngredientView(viewModel: PantryViewModel())
-//    }
-//}
+struct AddIngredientView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddIngredientView(viewModel: PantryViewModel())
+    }
+}

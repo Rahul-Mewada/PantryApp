@@ -17,6 +17,7 @@ struct IngredientDetailsView: View {
     @State var showExpiresPicker: Bool = false
     @State var showCategoryPicker: Bool = false
     @State var expireDate: Date = Date()
+    @State var hasExpire: Bool = true
     @State var isStocked: Bool = false
     @State var isLow: Bool = false
     @State var isOut: Bool = false
@@ -37,12 +38,12 @@ struct IngredientDetailsView: View {
 //                    quantityPicker(showPicker: $showQuantityPicker, value: $quantityValue)
 //                        .padding(.vertical, 5)
 //                        .padding(.horizontal)
-                    expiresPicker(showPicker: $showExpiresPicker, expireDate: $expireDate)
+                    expiresPicker(expireDate: $expireDate, hasExpire: $hasExpire)
                         .padding(.vertical, 5)
                         .padding(.horizontal)
-                    categoryPicker(viewModel: viewModel, selectedCategory: $selectedCategory)
-                        .padding(.vertical, 5)
-                        .padding(.horizontal)
+//                    categoryPicker(viewModel: viewModel, selectedCategory: $selectedCategory)
+//                        .padding(.vertical, 5)
+//                        .padding(.horizontal)
                     Spacer(minLength: 40)
                     ZStack {
                         RoundedRectangle(cornerRadius: 5)
@@ -75,7 +76,7 @@ struct IngredientDetailsView: View {
                                 .padding()
                                 VStack(spacing: 0) {
                                     Text("Select Expire Date")
-                                    DatePicker("Date", selection: $expireDate, displayedComponents: .date)
+                                    //DatePicker("Date", selection: $expireDate, displayedComponents: .date)
                                     .labelsHidden()
                                 }
                                 .scaledToFit()

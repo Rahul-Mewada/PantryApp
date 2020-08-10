@@ -12,7 +12,7 @@ struct quantityPicker: View {
     @ObservedObject var viewModel: PantryViewModel
     @State var showPicker: Bool = false
     @Binding var value: String
-    @State var unitString: String = "grams (g)"
+    @Binding var unit: PantryModel.unitPref
     
     
     var body: some View {
@@ -28,9 +28,9 @@ struct quantityPicker: View {
                         .frame(width: 60)
                     Divider()
                         .frame(height: 20)
-                    NavigationLink(destination: unitsView(viewModel: viewModel, unitString: self.$unitString)) {
+                    NavigationLink(destination: unitsView(viewModel: viewModel,  unit: $unit)) {
                         HStack {
-                            Text("\(unitString)")
+                            Text("\(unit.rawValue)")
                                 .font(Font.subheadline)
                                 .padding(.leading, 10)
                             Spacer()
@@ -51,7 +51,7 @@ struct quantityPicker: View {
 struct unitsView: View {
     @ObservedObject var viewModel: PantryViewModel
     @State var typeOfUnits: Int = 0
-    @Binding var unitString: String
+    @Binding var unit: PantryModel.unitPref
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -63,31 +63,44 @@ struct unitsView: View {
                 Picker(selection: $typeOfUnits, label: Text("Select the unit type")) {
                     Text("Mass").tag(0)
                     Text("Volume").tag(1)
+                    Text("Single Unit").tag(2)
                 }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.horizontal)
                 
             VStack(alignment: .leading) {
-                ForEach((typeOfUnits == 0) ? viewModel.unitsMass : viewModel.unitsVol, id: \.self){ unit in
-                    VStack(alignment: .leading) {
-                        Button(action: {
-                            self.unitString = unit
-                            self.presentationMode.wrappedValue.dismiss()
-                        }) {
-                            ZStack(alignment: .leading) {
-                                Color.themeForeground
-                                Text("\(unit)").foregroundColor(Color.black)
-                            }
-                            .frame(height: 20)
+                if typeOfUnits != 2 {
+                    ForEach((typeOfUnits == 0) ? PantryModel.unitPref.allCases[0...3] : PantryModel.unitPref.allCases[4...8], id: \.self){ unit in
+                                        VStack(alignment: .leading) {
+                                            Button(action: {
+                                                self.unit = unit
+                                                self.presentationMode.wrappedValue.dismiss()
+                                            }) {
+                                                ZStack(alignment: .leading) {
+                                                    Color.themeForeground
+                                                    Text("\(unit.rawValue)").foregroundColor(Color.black)
+                                                }
+                                                .frame(height: 20)
+                                            }
+                                            Divider()
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.horizontal)
+                                    }
+                } else {
+                    Button(action: {
+                        self.unit = .unit
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        ZStack(alignment: .leading) {
+                            Color.themeForeground
+                            Text("unit").foregroundColor(Color.black)
                         }
-                        
-                        if unit != ((self.typeOfUnits == 0) ? self.viewModel.unitsMass.last : self.viewModel.unitsVol.last){
-                            Divider()
-                        }
+                        .frame(height: 20)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
                 }
+                
+                
             }
                 .padding()
                 .background(Color.themeForeground)
