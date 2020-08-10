@@ -123,7 +123,7 @@ struct ingredientPantryView :View {
                  }
                  Spacer()
                  VStack(alignment: .trailing) {
-                     Text("\(ingredient.measurement.value, specifier: "%.1f") \(ingredient.measurement.unit.symbol)")
+                    Text("\(ingredient.measurement.value, specifier: "%.1f") \(ingredient.measurement.unit.symbol)")
                     Text("\(ingredient.category)")
                 
                     }

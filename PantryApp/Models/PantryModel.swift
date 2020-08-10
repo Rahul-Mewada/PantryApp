@@ -9,17 +9,127 @@
 import Foundation
 
 struct PantryModel {
-    
-    //TODO:  Have different inits for Measurements<UnitMass>, Measurements<UnitVolume>
-    //TODO:  Find out how to deal with stuff that are unitwise, eg: Apples, Bananas, Eggs etc
+
     struct Ingredient: Identifiable {
         var name: String
-        var measurement: Measurement<UnitMass>
-        var status: status
-        var id: Int
-        var category: String
-        //TODO: Purchases
-        //TODO: Average Repurchase time
+        var unitPref: unitPref
+        var measurementMass: Measurement<UnitMass>?
+        var measurementVol: Measurement<UnitVolume>?
+        var measurementUnit: Double?
+        var status: status?
+        var id: UUID
+        var category: String?
+        var storePref: String?
+        var recurring: Bool?
+        var expireDate: Date?
+        var isRecipeIngredient: Bool = false
+        var isLiked: Bool?
+        var isExpired: Bool? {
+            if let expireyDate = expireDate {
+                let now = Date()
+                if expireyDate >= now {
+                    return false
+                } else {
+                    return true
+                }
+            } else {
+                return nil
+            }
+        }
+        
+        // Initialize Ingredient with mass units, i.e. 1 kg rice, 2 lbs pork shoulder, etc
+        init(name: String, value: Double, unit: PantryModel.unitMass, status: status, category: String, storePref: String?, recurring: Bool?, expireDate: Date?, isLiked: Bool) {
+            self.name = name
+            switch unit {
+            case .gram:
+                self.measurementMass = Measurement(value: value, unit: UnitMass.grams)
+                self.unitPref = PantryModel.unitPref.gram
+            case .kilogram:
+                self.measurementMass = Measurement(value: value, unit: UnitMass.kilograms)
+                self.unitPref = PantryModel.unitPref.kilogram
+            case .ounce:
+                self.measurementMass = Measurement(value: value, unit: UnitMass.ounces)
+                self.unitPref = PantryModel.unitPref.ounce
+            case .pound:
+                self.measurementMass = Measurement(value: value, unit: UnitMass.pounds)
+                self.unitPref = PantryModel.unitPref.pound
+            }
+            self.status = status
+            self.id = UUID()
+            self.storePref = storePref
+            self.recurring = recurring
+            self.expireDate = expireDate
+            self.category = category
+            self.isLiked = isLiked
+        }
+        
+        // Initialize Ingredient with "unit" measurements, i.e. 1 chicken breast, 2 avocados, etc
+        init(name: String, measurement: Double, status: status, category: String, storePref: String?, recurring: Bool?, expireDate: Date?, isLiked: Bool?) {
+            self.name = name
+            self.measurementUnit = measurement
+            self.status = status
+            self.id = UUID()
+            self.storePref = storePref
+            self.recurring = recurring
+            self.expireDate = expireDate
+            self.category = category
+            self.isLiked = isLiked
+            self.unitPref = PantryModel.unitPref.unit
+        }
+        
+        // Initialize Ingredients with volumetric units, i.e. ml, cups, tbsp
+        init(name: String, value: Double, unit: PantryModel.unitVol, status: status, category: String, storePref: String?, recurring: Bool, expireDate: Date?, isLiked: Bool?) {
+            self.name = name
+            switch unit {
+            case .cup:
+                self.measurementVol = Measurement(value: value, unit: UnitVolume.cups)
+                self.unitPref = PantryModel.unitPref.cup
+            case .liter:
+                self.measurementVol = Measurement(value: value, unit: UnitVolume.liters)
+                self.unitPref = PantryModel.unitPref.liter
+            case .milliliter:
+                self.measurementVol = Measurement(value: value, unit: UnitVolume.milliliters)
+                self.unitPref = PantryModel.unitPref.cup
+            case .tablespoon:
+                self.measurementVol = Measurement(value: value, unit: UnitVolume.tablespoons)
+                self.unitPref = PantryModel.unitPref.tablespoon
+            case .teaspoon:
+                self.measurementVol = Measurement(value: value, unit: UnitVolume.teaspoons)
+                self.unitPref = PantryModel.unitPref.teaspoon
+            }
+            self.status = status
+            self.id = UUID()
+            self.storePref = storePref
+            self.recurring = recurring
+            self.expireDate = expireDate
+            self.category = category
+            self.isLiked = isLiked
+        }
+        
+        //Used to initialize ingredients from a recipe. ONLY USE IN THE ADD RECIPE VIEW.
+        init(name: String, measurementMass: Measurement<UnitMass>?, measurementVol: Measurement<UnitVolume>?, measurementUnit: Double?, unitPref: PantryModel.unitPref) {
+            self.name = name
+            self.measurementMass = measurementMass
+            self.measurementVol = measurementVol
+            self.measurementUnit = measurementUnit
+            self.id = UUID()
+            self.unitPref = unitPref
+            self.isRecipeIngredient = true
+            }
+    }
+    
+    
+    enum unitPref {
+        case gram
+        case kilogram
+        case pound
+        case ounce
+        case cup
+        case tablespoon
+        case teaspoon
+        case liter
+        case milliliter
+        case unit
     }
     
     enum status: String {
@@ -29,11 +139,25 @@ struct PantryModel {
         case expired = "Expired"
     }
     
+    var Stores: Array<String> = ["Walmart", "Meijer", "Fresh Thyme", "WholeFoods", "Trader Joes"]
     var Categories: Array <String> = ["Meat", "Poultry", "Veggies", "Spices"]
-    
     var unitsMass: Array<String> = ["grams (g)", "kilograms (kg)", "pounds (lb)", "ounces (oz)"]
     var unitsVol: Array<String> = ["cups", "tablespoon (tbsp)", "teaspoons (tsp)", "liters (l)", "milliliters (ml)"]
-    //var unitsSingle: Int = 0
+
+    enum unitMass: String {
+        case gram = "grams (g)"
+        case kilogram = "kilograms (kg)"
+        case pound = "pounds (lb)"
+        case ounce = "ounces (oz)"
+    }
+    
+    enum unitVol: String {
+        case cup = "cups"
+        case tablespoon = "tablespoons (tbsp)"
+        case teaspoon = "teaspoons (tsp)"
+        case liter = "liters (l)"
+        case milliliter = "milliliters (ml)"
+    }
     
     var ingredientsInPantry: Array<Ingredient>
     var recipesInPantry: Array<Recipe>
@@ -75,7 +199,9 @@ struct PantryModel {
         self.Categories.append(category)
     }
     
-    
+    mutating func addStore(store: String) {
+        self.Stores.append(store)
+    }
 }
 
 

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct quantityPicker: View {
     @ObservedObject var viewModel: PantryViewModel
-    @Binding var showPicker: Bool
+    @State var showPicker: Bool = false
     @Binding var value: String
     @State var unitString: String = "grams (g)"
     

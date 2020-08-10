@@ -1,36 +1,20 @@
 //
-//  categoryPicker.swift
+//  storePicker.swift
 //  PantryApp
 //
-//  Created by Rahul Mewada on 7/25/20.
+//  Created by Rahul Mewada on 8/9/20.
 //  Copyright © 2020 Rahul Mewada. All rights reserved.
 //
 
 import SwiftUI
 
-
-struct categoryPicker: View {
+struct storePicker: View {
     @ObservedObject var viewModel: PantryViewModel
     @State var showPicker: Bool = false
     @State var showTextField: Bool = false
     @State var categoryName: String = ""
-    
     @Binding var selectedCategory: String
-    var title: String
-    var subtitle: String
-    var contents: Array<String>
-    var prompt: String
-    var addCategory: (String) -> ()
     
-    init(model: PantryViewModel, select: Binding<String>, title: String, subtitle: String, contents: Array<String>, prompt: String, funcToAddCat: @escaping (String) -> ()) {
-        self.viewModel = model
-        self.title = title
-        self._selectedCategory = select
-        self.subtitle = subtitle
-        self.contents = contents
-        self.prompt = prompt
-        self.addCategory = funcToAddCat
-    }
     
     // Function that selects a category and closes all pickers of this view when called.
     func selectCategory(select category: String) {
@@ -51,7 +35,7 @@ struct categoryPicker: View {
     
     var body: some View {
         VStack(spacing: 5) {
-            Text("\(title)")
+            Text("Store Preference")
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(Font.body)
             ZStack {
@@ -63,7 +47,7 @@ struct categoryPicker: View {
                         }
                     }) {
                         HStack {
-                            Text((self.selectedCategory == "") ? "\(subtitle)" : "\(selectedCategory)")
+                            Text((self.selectedCategory == "") ? "Choose Category" : "\(selectedCategory)")
                                 .padding()
                                 .font(Font.subheadline)
                             Spacer()
@@ -79,7 +63,7 @@ struct categoryPicker: View {
                     //MARK: Dropdown picker that allows the user to pick a category
                     if self.showPicker {
                         VStack(alignment: .leading) {
-                            ForEach(self.contents, id: \.self) {category in
+                            ForEach(self.viewModel.categoriesInPantry, id: \.self) {category in
                                 VStack(alignment: .leading) {
                                     Divider()
                                         .padding(.horizontal)
@@ -102,7 +86,7 @@ struct categoryPicker: View {
                             if showTextField {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        TextField("\(prompt)", text: $categoryName, onCommit: {
+                                        TextField("Enter a new category", text: $categoryName, onCommit: {
                                             if self.categoryName != "" {
                                                 self.viewModel.addCategory(add: self.categoryName)
                                                 self.selectCategory(select: self.categoryName)
@@ -118,7 +102,7 @@ struct categoryPicker: View {
                                             withAnimation(.easeIn) {
                                                 Button(action: {
                                                     if self.categoryName != "" {
-                                                        self.addCategory(self.categoryName)
+                                                        self.viewModel.addCategory(add: self.categoryName)
                                                         self.selectCategory(select: self.categoryName)
                                                         self.categoryName = ""
                                                         withAnimation(.spring()){
@@ -168,6 +152,9 @@ struct categoryPicker: View {
                                     }
                                 }
                             }
+                            
+                            
+                            
                         }
                             .font(Font.subheadline)
                             .padding(.bottom)
@@ -177,8 +164,7 @@ struct categoryPicker: View {
             }
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 5))
+                
         }
     }
 }
-
-

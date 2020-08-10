@@ -19,10 +19,7 @@ struct AddIngredientView: View {
     @State var ingredientName:String = ""
     @State var showQuantityPicker: Bool = false
     @State var showExpiresPicker: Bool = false
-    @State var expireDate: Date = Date()
-    @State var isStocked: Bool = false
-    @State var isLow: Bool = false
-    @State var isOut: Bool = false
+    @State var expireDate: Date? = Date()
     @State var quantityValue: String = "0"
     @State var selectedCategory: String = ""
     
@@ -38,15 +35,15 @@ struct AddIngredientView: View {
                         nameTextField(ingredientName: $ingredientName)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-                        quantityPicker(viewModel: viewModel, showPicker: $showQuantityPicker, value: $quantityValue)
+                        quantityPicker(viewModel: viewModel, value: $quantityValue)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-                        expiresPicker(showPicker: $showExpiresPicker, expireDate: $expireDate)
+                        expiresPicker(expireDate: $expireDate)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-                        categoryPicker(viewModel: viewModel, selectedCategory: $selectedCategory)
-                            .padding(.vertical, 5)
-                            .padding(.horizontal)
+//                        categoryPicker(viewModel: viewModel, selectedCategory: $selectedCategory)
+//                            .padding(.vertical, 5)
+//                            .padding(.horizontal)
                         ZStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(height:35)

@@ -11,8 +11,14 @@ import Foundation
 
 
 struct expiresPicker: View {
-    @Binding var showPicker: Bool
-    @Binding var expireDate: Date
+    @State var showPicker: Bool = false
+    @Binding var expireDate: Date?
+    
+    var dateValue: Date
+    init(expireDate: Binding<Date?>) {
+        self._expireDate = expireDate
+        self.dateValue = expireDate.wrappedValue!
+    }
     
     var body: some View {
         
@@ -22,7 +28,12 @@ struct expiresPicker: View {
         dateFormat.timeStyle = .none
         dateFormat.locale = Locale(identifier: "en_US")
         var dateString: String {
-            dateFormat.string(from: expireDate)
+            if let expDate = expireDate {
+               return dateFormat.string(from: expDate)
+            } else {
+                return "No Expire Date"
+            }
+            
         }
         
         return VStack(spacing: 5) {
@@ -47,10 +58,9 @@ struct expiresPicker: View {
                     .foregroundColor(Color.black)
                    
                     if showPicker {
-                        
                        Divider().padding(.horizontal)
                        VStack(spacing: 0) {
-                           DatePicker("Date", selection: $expireDate, displayedComponents: .date)
+                           DatePicker("Date", selection: dateValue, displayedComponents: .date)
                            .labelsHidden()
                        }
                            .background(Color.white)

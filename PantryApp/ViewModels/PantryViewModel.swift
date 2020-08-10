@@ -15,25 +15,17 @@ class PantryViewModel: ObservableObject {
     
     static func createPantryModel() -> PantryModel {
         // Declaring test Ingredients
-        var testIngredientOne = PantryModel.Ingredient(name: "Chicken", measurement: Measurement(value: 0.5, unit: UnitMass.kilograms), status: .low, id: 1, category: "Poultry")
-        var testIngredientTwo = PantryModel.Ingredient(name: "Pork", measurement: Measurement(value: 100, unit: UnitMass.grams), status: .stocked, id: 2, category: "Meat")
-        var testIngredientThree = PantryModel.Ingredient(name: "Beef", measurement: Measurement(value: 600, unit: UnitMass.grams), status: .out, id: 3, category: "Meat")
-        var testIngredientFour = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
-        var testIngredientSeven = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
-        var testIngredientFive = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
-        var testIngredientSix = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
+//        var testIngredientOne = PantryModel.Ingredient(name: "Chicken", measurement: Measurement(value: 0.5, unit: UnitMass.kilograms), status: .low, id: 1, category: "Poultry")
+//        var testIngredientTwo = PantryModel.Ingredient(name: "Pork", measurement: Measurement(value: 100, unit: UnitMass.grams), status: .stocked, id: 2, category: "Meat")
+//        var testIngredientThree = PantryModel.Ingredient(name: "Beef", measurement: Measurement(value: 600, unit: UnitMass.grams), status: .out, id: 3, category: "Meat")
+//        var testIngredientFour = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
+//        var testIngredientSeven = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
+//        var testIngredientFive = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
+//        var testIngredientSix = PantryModel.Ingredient(name: "Eggs", measurement: Measurement(value: 0.5, unit: UnitMass.grams), status: .low, id: 4, category: "Poulty")
         
         // Initializing test array of ingredients
         var testRecipeIngredients: Array<PantryModel.Ingredient> {
             [
-                testIngredientOne,
-                testIngredientTwo,
-                testIngredientThree,
-                testIngredientFour,
-                testIngredientFive,
-                testIngredientSix,
-                testIngredientSeven
-                
             ]
         }
         

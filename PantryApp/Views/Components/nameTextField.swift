@@ -16,8 +16,8 @@ struct nameTextField: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             TextField("Enter the ingredient name", text: $ingredientName)
                 .font(Font.subheadline)
-                .padding(.vertical, 5)
-                .padding(.horizontal, 5)
+                .padding(.vertical,5)
+                .padding(.horizontal)
                 .background(Color.white)
                 .cornerRadius(5)
         }
