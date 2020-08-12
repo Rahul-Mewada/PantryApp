@@ -14,9 +14,9 @@ struct PantryModel {
     struct Ingredient: Identifiable {
         var name: String
         var unitPref: unitType
-        var measurementMass: Measurement<UnitMass>?
-        var measurementVol: Measurement<UnitVolume>?
-        var measurementUnit: Double?
+        var measurementMass: Measurement<Unit>?
+        var measurementVol: Measurement<Unit>?
+        var measurementUnit: Measurement<Unit>?
         var status: status?
         var id: UUID
         var category: String?
@@ -70,7 +70,7 @@ struct PantryModel {
                 self.measurementVol = Measurement(value: value, unit: UnitVolume.teaspoons)
                 self.unitPref = PantryModel.unitType.teaspoon
             case .unit:
-                self.measurementUnit = value
+                self.measurementUnit = Measurement(value: value, unit: SingleUnit.unit)
                 self.unitPref = PantryModel.unitType.unit
             }
             self.status = status
@@ -82,51 +82,8 @@ struct PantryModel {
             self.isLiked = isLiked
         }
         
-        // Initialize Ingredient with "unit" measurements, i.e. 1 chicken breast, 2 avocados, etc
-//        init(name: String, measurement: Double, status: status, category: String, storePref: String?, recurring: Bool?, expireDate: Date?, isLiked: Bool?) {
-//            self.name = name
-//            self.measurementUnit = measurement
-//            self.status = status
-//            self.id = UUID()
-//            self.storePref = storePref
-//            self.recurring = recurring
-//            self.expireDate = expireDate
-//            self.category = category
-//            self.isLiked = isLiked
-//            self.unitPref = PantryModel.unitPref.unit
-//        }
-        
-        // Initialize Ingredients with volumetric units, i.e. ml, cups, tbsp
-//        init(name: String, value: Double, unit: PantryModel.unitPref, status: status, category: String, storePref: String?, recurring: Bool, expireDate: Date?, isLiked: Bool?) {
-//            self.name = name
-//            switch unit {
-//            case .cup:
-//                self.measurementVol = Measurement(value: value, unit: UnitVolume.cups)
-//                self.unitPref = PantryModel.unitPref.cup
-//            case .liter:
-//                self.measurementVol = Measurement(value: value, unit: UnitVolume.liters)
-//                self.unitPref = PantryModel.unitPref.liter
-//            case .milliliter:
-//                self.measurementVol = Measurement(value: value, unit: UnitVolume.milliliters)
-//                self.unitPref = PantryModel.unitPref.cup
-//            case .tablespoon:
-//                self.measurementVol = Measurement(value: value, unit: UnitVolume.tablespoons)
-//                self.unitPref = PantryModel.unitPref.tablespoon
-//            case .teaspoon:
-//                self.measurementVol = Measurement(value: value, unit: UnitVolume.teaspoons)
-//                self.unitPref = PantryModel.unitPref.teaspoon
-//            }
-//            self.status = status
-//            self.id = UUID()
-//            self.storePref = storePref
-//            self.recurring = recurring
-//            self.expireDate = expireDate
-//            self.category = category
-//            self.isLiked = isLiked
-//        }
-        
         //Used to initialize ingredients from a recipe. ONLY USE IN THE ADD RECIPE VIEW.
-        init(name: String, measurementMass: Measurement<UnitMass>?, measurementVol: Measurement<UnitVolume>?, measurementUnit: Double?, unitPref: PantryModel.unitType) {
+        init(name: String, measurementMass: Measurement<Unit>?, measurementVol: Measurement<Unit>?, measurementUnit: Measurement<Unit>?, unitPref: PantryModel.unitType) {
             self.name = name
             self.measurementMass = measurementMass
             self.measurementVol = measurementVol
@@ -158,71 +115,55 @@ struct PantryModel {
     struct Measurements {
         var value: Double
         var unit: PantryModel.unitType
-        var measurementAll: (Measurement<UnitMass>?, Measurement<UnitVolume>?, Double?)
+
         
         init(value: Double, unit: PantryModel.unitType) {
             self.value = value
             self.unit = unit
-            self.measurementAll = self.unitToMeasurement(value: self.value, unit: self.unit)
         }
         
-        func unitToMeasurement(value: Double, unit: PantryModel.unitType) -> (Measurement<UnitMass>?, Measurement<UnitVolume>?, Double?) {
-            switch unit {
-            case .gram:
-                return (Measurement<UnitMass>(value: value, unit: .grams), nil, nil)
-            case .kilogram:
-                return (Measurement<UnitMass>(value: value, unit: .kilograms), nil, nil)
-            case .pound:
-                return (Measurement<UnitMass>(value: value, unit: .pounds), nil, nil)
-            case .ounce:
-                return (Measurement<UnitMass>(value: value, unit: .pounds), nil, nil)
-            case .cup:
-                return (nil, Measurement<UnitVolume>(value: value, unit: .cups), nil)
-            case .tablespoon:
-                return (nil, Measurement<UnitVolume>(value: value, unit: .tablespoons), nil)
-            case .teaspoon:
-                return (nil, Measurement<UnitVolume>(value: value, unit: .teaspoons), nil)
-            case .liter:
-                return (nil, Measurement<UnitVolume>(value: value, unit: .liters), nil)
-            case .milliliter:
-                return (nil, Measurement<UnitVolume>(value: value, unit: .milliliters), nil)
-            case .unit:
-                return (nil, nil, value)
-            }
+        func unitToMeasurement(value: Double, unit: PantryModel.unitType) -> Measurement<Unit> {
+            return Measurement<Unit>(value: value, unit: self.unitEnumToType(convert: unit))
         }
         
-        func unitEnumToType(convert unit: PantryModel.unitType) -> (UnitMass?, UnitVolume?, String?) {
+        func unitEnumToType(convert unit: PantryModel.unitType) -> Unit {
             switch(unit){
             case .gram:
-                return (UnitMass.grams, nil, nil)
+                return UnitMass.grams
             case .kilogram:
-                return (UnitMass.kilograms, nil, nil)
+                return UnitMass.kilograms
             case .pound:
-                return (UnitMass.pounds, nil, nil)
+                return UnitMass.pounds
             case .ounce:
-                return (UnitMass.ounces, nil, nil)
+                return UnitMass.ounces
             case .cup:
-                return (nil, UnitVolume.cups, nil)
+                return UnitVolume.cups
             case .tablespoon:
-                return (nil, UnitVolume.tablespoons, nil)
+                return UnitVolume.tablespoons
             case .teaspoon:
-                return (nil, UnitVolume.teaspoons, nil)
+                return UnitVolume.teaspoons
             case .liter:
-                return (nil, UnitVolume.liters, nil)
+                return UnitVolume.liters
             case .milliliter:
-                return (nil, UnitVolume.milliliters, nil)
+                return UnitVolume.milliliters
             case .unit:
-                return (nil, nil, "units")
+                return SingleUnit.unit
             }
             
         }
         
-        func convertVolumeToVolume(from inputMeasure: Measurement<UnitVolume>, outputMeasure: UnitVolume) -> Measurement<UnitVolume> {
-            
+        func convertVolumeToVolume(from inputMeasure: Measurement<Unit>, outputMeasure: UnitVolume) -> Measurement<Unit> {
+            let inputMeasureUnitVol = Measurement<UnitVolume>(value: inputMeasure.value, unit: inputMeasure.unit as! UnitVolume)
+            let outputMeasureUnitVol = inputMeasureUnitVol.converted(to: outputMeasure)
+            let outputMeasureUnit = Measurement<Unit>(value: outputMeasureUnitVol.value, unit: outputMeasureUnitVol.unit)
+            return outputMeasureUnit
         }
         
-        func convertMassToMass{
-            
+        func convertMassToMass(from inputMeasure: Measurement<Unit>, outputMeasure: UnitMass) -> Measurement<Unit> {
+            let inputMeasureUnitMass = Measurement<UnitMass>(value: inputMeasure.value, unit: inputMeasure.unit as! UnitMass)
+            let outputMeasureUnitMass = inputMeasureUnitMass.converted(to: outputMeasure)
+            let outputMeasureUnit = Measurement<Unit>(value: outputMeasureUnitMass.value, unit: outputMeasureUnitMass.unit)
+            return outputMeasureUnit
         }
     }
     

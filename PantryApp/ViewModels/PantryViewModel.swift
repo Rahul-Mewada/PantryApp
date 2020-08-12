@@ -58,14 +58,6 @@ class PantryViewModel: ObservableObject {
         
     }
     
-    static func unitToMeasurement(value: Double, unit: PantryModel.unitType)  {
-        switch unit {
-        case .gram:
-            return Measurement<UnitMass>(value: value, unit: UnitMass.grams)
-        default:
-            <#code#>
-        }
-    }
     
     //MARK: - Accesing The Model
     var ingredientsInPantry: Array<PantryModel.Ingredient> {
