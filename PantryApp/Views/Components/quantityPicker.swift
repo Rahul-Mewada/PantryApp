@@ -12,8 +12,27 @@ struct quantityPicker: View {
     @ObservedObject var viewModel: PantryViewModel
     @State var showPicker: Bool = false
     @Binding var value: String
-    @Binding var unit: PantryModel.unitPref
+    @Binding var unit: PantryModel.unitType
     
+    init(viewModel: PantryViewModel, value: Binding<String>, unit: Binding<PantryModel.unitType>) {
+        self.viewModel = viewModel
+        self._value = value
+        self._unit = unit
+    }
+    
+//    init(viewModel: PantryViewModel, ingredient: Binding<PantryModel.Ingredient>) {
+//        self.viewModel = viewModel
+//        self._unit = ingredient.unitPref
+//        var valueTemp: String
+//        switch self.unit {
+//        case .gram, .kilogram, .pound, .ounce:
+//            valueTemp = String(ingredient.measurementMass!.value)
+//        case .cup, .liter, .milliliter, .teaspoon, .tablespoon:
+//            valueTemp = String(ingredient.measurementVol!.value)
+//        case .unit:
+//            valueTemp = String(ingredient.measurementUnit!)
+//        }
+//    }
     
     var body: some View {
         VStack(spacing: 5) {
@@ -51,7 +70,7 @@ struct quantityPicker: View {
 struct unitsView: View {
     @ObservedObject var viewModel: PantryViewModel
     @State var typeOfUnits: Int = 0
-    @Binding var unit: PantryModel.unitPref
+    @Binding var unit: PantryModel.unitType
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -70,7 +89,7 @@ struct unitsView: View {
                 
             VStack(alignment: .leading) {
                 if typeOfUnits != 2 {
-                    ForEach((typeOfUnits == 0) ? PantryModel.unitPref.allCases[0...3] : PantryModel.unitPref.allCases[4...8], id: \.self){ unit in
+                    ForEach((typeOfUnits == 0) ? PantryModel.unitType.allCases[0...3] : PantryModel.unitType.allCases[4...8], id: \.self){ unit in
                                         VStack(alignment: .leading) {
                                             Button(action: {
                                                 self.unit = unit

@@ -113,9 +113,21 @@ struct recipePantryView: View {
 //MARK:- Veritcal Ingredient View
 struct ingredientPantryView :View {
     @ObservedObject var viewModel: PantryViewModel
-    var ingredient: PantryModel.Ingredient
+    @State var ingredient: PantryModel.Ingredient
+    
     var body: some View {
-        NavigationLink(destination: IngredientDetailsView(viewModel: self.viewModel, ingredient: self.ingredient)) {
+        NavigationLink(destination: IngredientDetailsView(viewModel: self.viewModel,
+                                                          ingredientPassed: self.ingredient,
+                                                          ingredientName: self.ingredient.name,
+                                                          expireDate: (self.ingredient.expireDate != nil) ? self.ingredient.expireDate! : Date(),
+                                                          hasExpireDate: (self.ingredient.expireDate != nil) ? true : false,
+                                                          quantityValue: String(0),
+                                                          unit: .cup,
+                                                          selectedCategory: (self.ingredient.category != nil) ? self.ingredient.category! : "",
+                                                          selectedStore: (self.ingredient.storePref != nil) ? self.ingredient.storePref! : "No Prefence",
+                                                          hasStore: (self.ingredient.storePref != nil) ? true : false,
+                                                          isRecurring: self.ingredient.recurring,
+                                                          isLiked: (self.ingredient.isLiked != nil) ? self.ingredient.isLiked! : false)) {
             VStack {
                 HStack {
                  VStack(alignment: .leading) {

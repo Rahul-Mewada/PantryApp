@@ -16,13 +16,14 @@ struct AddIngredientView: View {
     }
     
     @ObservedObject var viewModel: PantryViewModel
+    
     @State var ingredientName:String = ""
     
     @State var expireDate: Date = Date()
     @State var hasExpireDate: Bool = true
     
     @State var quantityValue: String = "0"
-    @State var unit: PantryModel.unitPref = .gram
+    @State var unit: PantryModel.unitType = .gram
     
     @State var selectedCategory: String = ""
     
@@ -34,6 +35,8 @@ struct AddIngredientView: View {
     @State var passedCategoryField: Bool = true
     
     @State var isRecurring: Bool = true
+    
+    @State var isLiked: Bool = false
     
     var body: some View {
         changeNavBarColor()
@@ -82,7 +85,7 @@ struct AddIngredientView: View {
                                 .frame(height: 35)
                                 .padding()
                                 .shadow(color: (acceptibleSubmission()) ? Color.green : Color.orange, radius: 2)
-                            Text("Add Recipe")
+                            Text("Add Ingredient")
                                 .foregroundColor(Color.white)
                                 .frame(alignment: .center)
                            }
@@ -99,9 +102,9 @@ struct AddIngredientView: View {
                 }) {
                     Image(systemName: "chevron.left").font(.system(size: 20)).foregroundColor(Color.black)
                 }, trailing: Button(action: {
-                    
+                    self.isLiked.toggle()
                 }) {
-                    Image(systemName: "heart").font(.system(size: 20)).foregroundColor(Color.black)
+                    Image(systemName: (isLiked) ? "heart.fill" : "heart").font(.system(size: 20)).foregroundColor((isLiked) ? Color.red : Color.black)
                 })
                 
             }

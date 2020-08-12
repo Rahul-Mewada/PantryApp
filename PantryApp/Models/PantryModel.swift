@@ -13,7 +13,7 @@ struct PantryModel {
     //MARK: Ingredient Struct
     struct Ingredient: Identifiable {
         var name: String
-        var unitPref: unitPref
+        var unitPref: unitType
         var measurementMass: Measurement<UnitMass>?
         var measurementVol: Measurement<UnitVolume>?
         var measurementUnit: Double?
@@ -21,7 +21,7 @@ struct PantryModel {
         var id: UUID
         var category: String?
         var storePref: String?
-        var recurring: Bool?
+        var recurring: Bool
         var expireDate: Date?
         var isRecipeIngredient: Bool = false
         var isLiked: Bool?
@@ -39,39 +39,39 @@ struct PantryModel {
         }
         
         // Initialize Ingredient with mass units, i.e. 1 kg rice, 2 lbs pork shoulder, etc
-        init(name: String, value: Double, unit: PantryModel.unitPref, status: status, category: String, storePref: String?, recurring: Bool?, expireDate: Date?, isLiked: Bool) {
+        init(name: String, value: Double, unit: PantryModel.unitType, status: status, category: String, storePref: String?, recurring: Bool, expireDate: Date?, isLiked: Bool) {
             self.name = name
             switch unit {
             case .gram:
                 self.measurementMass = Measurement(value: value, unit: UnitMass.grams)
-                self.unitPref = PantryModel.unitPref.gram
+                self.unitPref = PantryModel.unitType.gram
             case .kilogram:
                 self.measurementMass = Measurement(value: value, unit: UnitMass.kilograms)
-                self.unitPref = PantryModel.unitPref.kilogram
+                self.unitPref = PantryModel.unitType.kilogram
             case .ounce:
                 self.measurementMass = Measurement(value: value, unit: UnitMass.ounces)
-                self.unitPref = PantryModel.unitPref.ounce
+                self.unitPref = PantryModel.unitType.ounce
             case .pound:
                 self.measurementMass = Measurement(value: value, unit: UnitMass.pounds)
-                self.unitPref = PantryModel.unitPref.pound
+                self.unitPref = PantryModel.unitType.pound
             case .cup:
                 self.measurementVol = Measurement(value: value, unit: UnitVolume.cups)
-                self.unitPref = PantryModel.unitPref.cup
+                self.unitPref = PantryModel.unitType.cup
             case .liter:
                 self.measurementVol = Measurement(value: value, unit: UnitVolume.liters)
-                self.unitPref = PantryModel.unitPref.liter
+                self.unitPref = PantryModel.unitType.liter
             case .milliliter:
                 self.measurementVol = Measurement(value: value, unit: UnitVolume.milliliters)
-                self.unitPref = PantryModel.unitPref.cup
+                self.unitPref = PantryModel.unitType.cup
             case .tablespoon:
                 self.measurementVol = Measurement(value: value, unit: UnitVolume.tablespoons)
-                self.unitPref = PantryModel.unitPref.tablespoon
+                self.unitPref = PantryModel.unitType.tablespoon
             case .teaspoon:
                 self.measurementVol = Measurement(value: value, unit: UnitVolume.teaspoons)
-                self.unitPref = PantryModel.unitPref.teaspoon
+                self.unitPref = PantryModel.unitType.teaspoon
             case .unit:
                 self.measurementUnit = value
-                self.unitPref = PantryModel.unitPref.unit
+                self.unitPref = PantryModel.unitType.unit
             }
             self.status = status
             self.id = UUID()
@@ -126,7 +126,7 @@ struct PantryModel {
 //        }
         
         //Used to initialize ingredients from a recipe. ONLY USE IN THE ADD RECIPE VIEW.
-        init(name: String, measurementMass: Measurement<UnitMass>?, measurementVol: Measurement<UnitVolume>?, measurementUnit: Double?, unitPref: PantryModel.unitPref) {
+        init(name: String, measurementMass: Measurement<UnitMass>?, measurementVol: Measurement<UnitVolume>?, measurementUnit: Double?, unitPref: PantryModel.unitType) {
             self.name = name
             self.measurementMass = measurementMass
             self.measurementVol = measurementVol
@@ -134,11 +134,12 @@ struct PantryModel {
             self.id = UUID()
             self.unitPref = unitPref
             self.isRecipeIngredient = true
+            self.recurring = false
             }
     }
     
     
-    enum unitPref: String, CaseIterable {
+    enum unitType: String, CaseIterable {
         case gram = "grams (g)"
         case kilogram = "kilograms (kg)"
         case pound = "pounds (lb)"
@@ -150,6 +151,82 @@ struct PantryModel {
         case milliliter = "milliliters (ml)"
         case unit = "units"
     }
+    
+    
+    
+   
+    struct Measurements {
+        var value: Double
+        var unit: PantryModel.unitType
+        var measurementAll: (Measurement<UnitMass>?, Measurement<UnitVolume>?, Double?)
+        
+        init(value: Double, unit: PantryModel.unitType) {
+            self.value = value
+            self.unit = unit
+            self.measurementAll = self.unitToMeasurement(value: self.value, unit: self.unit)
+        }
+        
+        func unitToMeasurement(value: Double, unit: PantryModel.unitType) -> (Measurement<UnitMass>?, Measurement<UnitVolume>?, Double?) {
+            switch unit {
+            case .gram:
+                return (Measurement<UnitMass>(value: value, unit: .grams), nil, nil)
+            case .kilogram:
+                return (Measurement<UnitMass>(value: value, unit: .kilograms), nil, nil)
+            case .pound:
+                return (Measurement<UnitMass>(value: value, unit: .pounds), nil, nil)
+            case .ounce:
+                return (Measurement<UnitMass>(value: value, unit: .pounds), nil, nil)
+            case .cup:
+                return (nil, Measurement<UnitVolume>(value: value, unit: .cups), nil)
+            case .tablespoon:
+                return (nil, Measurement<UnitVolume>(value: value, unit: .tablespoons), nil)
+            case .teaspoon:
+                return (nil, Measurement<UnitVolume>(value: value, unit: .teaspoons), nil)
+            case .liter:
+                return (nil, Measurement<UnitVolume>(value: value, unit: .liters), nil)
+            case .milliliter:
+                return (nil, Measurement<UnitVolume>(value: value, unit: .milliliters), nil)
+            case .unit:
+                return (nil, nil, value)
+            }
+        }
+        
+        func unitEnumToType(convert unit: PantryModel.unitType) -> (UnitMass?, UnitVolume?, String?) {
+            switch(unit){
+            case .gram:
+                return (UnitMass.grams, nil, nil)
+            case .kilogram:
+                return (UnitMass.kilograms, nil, nil)
+            case .pound:
+                return (UnitMass.pounds, nil, nil)
+            case .ounce:
+                return (UnitMass.ounces, nil, nil)
+            case .cup:
+                return (nil, UnitVolume.cups, nil)
+            case .tablespoon:
+                return (nil, UnitVolume.tablespoons, nil)
+            case .teaspoon:
+                return (nil, UnitVolume.teaspoons, nil)
+            case .liter:
+                return (nil, UnitVolume.liters, nil)
+            case .milliliter:
+                return (nil, UnitVolume.milliliters, nil)
+            case .unit:
+                return (nil, nil, "units")
+            }
+            
+        }
+        
+        func convertVolumeToVolume(from inputMeasure: Measurement<UnitVolume>, outputMeasure: UnitVolume) -> Measurement<UnitVolume> {
+            
+        }
+        
+        func convertMassToMass{
+            
+        }
+    }
+    
+    
     
     enum status: String {
         case out = "Out"
@@ -193,6 +270,7 @@ struct PantryModel {
         case dinner = "Dinner"
         case snack = "Snack"
     }
+    
     
     struct Recipe: Identifiable {
         var name: String
