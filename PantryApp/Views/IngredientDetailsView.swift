@@ -19,6 +19,8 @@ struct IngredientDetailsView: View {
     
     @State var ingredientName:String
     
+    @State var ingredientStatus: PantryModel.status
+    
     @State var expireDate: Date
     @State var hasExpireDate: Bool
     
@@ -36,15 +38,14 @@ struct IngredientDetailsView: View {
     
     
     var body: some View {
-        changeNavBarColor()
+        //changeNavBarColor()
         return NavigationView {
             ScrollView {
                 ZStack {
                     VStack {
-                        nameTextField(ingredientName: $ingredientName)
+                        statusSelection(currentStatus: $ingredientStatus)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-                        
                         quantityPicker(viewModel: viewModel, value: $quantityValue, unit: $unit)
                             .padding(.vertical, 5)
                             .padding(.horizontal)

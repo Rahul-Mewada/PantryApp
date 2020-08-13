@@ -119,15 +119,16 @@ struct ingredientPantryView :View {
         NavigationLink(destination: IngredientDetailsView(viewModel: self.viewModel,
                                                           ingredientPassed: self.ingredient,
                                                           ingredientName: self.ingredient.name,
-                                                          expireDate: (self.ingredient.expireDate != nil) ? self.ingredient.expireDate! : Date(),
+                                                          ingredientStatus: self.ingredient.status ?? .stocked,
+                                                          expireDate: self.ingredient.expireDate ?? Date(),
                                                           hasExpireDate: (self.ingredient.expireDate != nil) ? true : false,
                                                           quantityValue: String(0),
                                                           unit: .cup,
-                                                          selectedCategory: (self.ingredient.category != nil) ? self.ingredient.category! : "",
-                                                          selectedStore: (self.ingredient.storePref != nil) ? self.ingredient.storePref! : "No Prefence",
+                                                          selectedCategory: self.ingredient.category ?? "",
+                                                          selectedStore: self.ingredient.storePref ?? "No Prefence",
                                                           hasStore: (self.ingredient.storePref != nil) ? true : false,
                                                           isRecurring: self.ingredient.recurring,
-                                                          isLiked: (self.ingredient.isLiked != nil) ? self.ingredient.isLiked! : false)) {
+                                                          isLiked: self.ingredient.isLiked ?? false)) {
             VStack {
                 HStack {
                  VStack(alignment: .leading) {
@@ -177,7 +178,7 @@ func returnMeasurement(ingredient: PantryModel.Ingredient) -> some View {
             return Text("")
         }
     case .unit:
-        if let unwrappedMeasurement = ingredient.measurementUnit {
+        if let unwrappedMeasurement = ingredient.measurementUnit?.value {
             return Text("\(unwrappedMeasurement, specifier: "%.0f") units")
         } else {
             return Text("")
