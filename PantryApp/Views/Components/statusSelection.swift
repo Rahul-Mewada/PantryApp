@@ -9,42 +9,47 @@
 import SwiftUI
 
 struct statusSelection:View {
+//    static func == (lhs: statusSelection, rhs: statusSelection) -> Bool {
+//        return lhs.currentStatus == rhs.currentStatus
+//    }
+    
+    @ObservedObject var viewModel: PantryViewModel
     @Binding var currentStatus: PantryModel.status
-    
-    var stockedColor: Color {
-        switch self.currentStatus {
-        case .stocked:
-            return Color.green
-        case .out, .low, .expired:
-            return Color.grayBox
-        }
-        
-    }
-    var lowColor: Color {
-        switch self.currentStatus{
-        case .low:
-            return Color.yellow
-        case .stocked, .out, .expired:
-            return Color.grayBox
-        }
-    }
-    var outColor: Color {
-        switch self.currentStatus{
-        case.out:
-            return Color.red
-        case .stocked, .expired, .low:
-            return Color.grayBox
-        }
-    }
-    
-    var expiredColor: Color {
-        switch self.currentStatus{
-        case .expired:
-            return Color.red
-        case .stocked, .low, .out:
-            return Color.grayBox
-        }
-    }
+    //@Binding var didChange: Bool
+//    var stockedColor: Color {
+//        switch self.currentStatus {
+//        case .stocked:
+//            return Color.green
+//        case .out, .low, .expired:
+//            return Color.grayBox
+//        }
+//
+//    }
+//    var lowColor: Color {
+//        switch self.currentStatus{
+//        case .low:
+//            return Color.yellow
+//        case .stocked, .out, .expired:
+//            return Color.grayBox
+//        }
+//    }
+//    var outColor: Color {
+//        switch self.currentStatus{
+//        case.out:
+//            return Color.red
+//        case .stocked, .expired, .low:
+//            return Color.grayBox
+//        }
+//    }
+//
+//    var expiredColor: Color {
+//        switch self.currentStatus{
+//        case .expired:
+//            return Color.red
+//        case .stocked, .low, .out:
+//            return Color.grayBox
+//        }
+//    }
     
     
     var body: some View {
@@ -58,9 +63,10 @@ struct statusSelection:View {
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(self.stockedColor)
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "stocked"))
                             .frame(height: 35)
-                        Text("Stocked").foregroundColor(Color.black)
+                        Text("Stocked")
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "stocked"))
                     }
                 }
 
@@ -71,9 +77,10 @@ struct statusSelection:View {
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(self.lowColor)
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "low"))
                             .frame(height: 35)
-                        Text("Low").foregroundColor(Color.black)
+                        Text("Low")
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "low"))
                     }
                 }
 
@@ -84,9 +91,10 @@ struct statusSelection:View {
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(outColor)
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "out"))
                             .frame(height: 35)
-                        Text("Out").foregroundColor(Color.black)
+                        Text("Out")
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "out"))
                     }
                 }
 
@@ -97,9 +105,10 @@ struct statusSelection:View {
                 }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(expiredColor)
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "expired"))
                             .frame(height: 35)
-                        Text("Expired").foregroundColor(Color.black)
+                        Text("Expired")
+                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "expired"))
                     }
                 }
             }

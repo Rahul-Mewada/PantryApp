@@ -11,9 +11,9 @@ import SwiftUI
 
 struct AddIngredientView: View {
     
-    func changeNavBarColor() {
-        UINavigationBar.appearance().backgroundColor = UIColor.init(red: 241, green: 241, blue: 241)
-    }
+//    func changeNavBarColor() {
+//       UINavigationBar.appearance().backgroundColor = UIColor.init(red: 241, green: 241, blue: 241)
+//    }
     
     @ObservedObject var viewModel: PantryViewModel
     
@@ -39,7 +39,7 @@ struct AddIngredientView: View {
     @State var isLiked: Bool = false
     
     var body: some View {
-        changeNavBarColor()
+        //changeNavBarColor()
         return NavigationView {
             ScrollView {
                 ZStack {
@@ -96,23 +96,21 @@ struct AddIngredientView: View {
                     }
                     .background(Color.themeBackground)
                 }
-                .navigationBarTitle("Add Ingredient", displayMode: .automatic)
-                .navigationBarItems(leading: Button(action: {
-                    
-                }) {
-                    Image(systemName: "chevron.left").font(.system(size: 20)).foregroundColor(Color.black)
-                }, trailing: Button(action: {
-                    self.isLiked.toggle()
-                }) {
-                    Image(systemName: (isLiked) ? "heart.fill" : "heart").font(.system(size: 20)).foregroundColor((isLiked) ? Color.red : Color.black)
-                })
+                
                 
             }
+            .navigationBarTitle("Add Ingredient", displayMode: .large)
+            .navigationBarItems(leading: Button(action: {
+                
+            }) {
+                Image(systemName: "chevron.left").font(.system(size: 20)).foregroundColor(Color.black)
+            }, trailing: Button(action: {
+                self.isLiked.toggle()
+            }) {
+                Image(systemName: (isLiked) ? "heart.fill" : "heart").font(.system(size: 20)).foregroundColor((isLiked) ? Color.red : Color.black)
+            })
             .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
-            
     }
-        
-        
 }
     
     func acceptibleSubmission() -> Bool {

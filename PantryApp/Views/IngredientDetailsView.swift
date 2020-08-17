@@ -10,26 +10,31 @@ import SwiftUI
 
 
 struct IngredientDetailsView: View {
-    func changeNavBarColor() {
-            UINavigationBar.appearance().backgroundColor = UIColor.init(red: 241, green: 241, blue: 241)
-        }
+
         
     @ObservedObject var viewModel: PantryViewModel
     @State var ingredientPassed: PantryModel.Ingredient
     
     @State var ingredientName:String
     
+    
     @State var ingredientStatus: PantryModel.status
+
     
     @State var expireDate: Date
+
+    
     @State var hasExpireDate: Bool
     
     @State var quantityValue: String
+
+    
     @State var unit: PantryModel.unitType
     
     @State var selectedCategory: String
-    
+
     @State var selectedStore: String
+
     @State var hasStore: Bool
     
     @State var isRecurring: Bool
@@ -42,8 +47,9 @@ struct IngredientDetailsView: View {
         return NavigationView {
             ScrollView {
                 ZStack {
+                    Color.themeBackground.edgesIgnoringSafeArea(.top)
                     VStack {
-                        statusSelection(currentStatus: $ingredientStatus)
+                        statusSelection(viewModel: viewModel, currentStatus: $ingredientStatus)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
                         quantityPicker(viewModel: viewModel, value: $quantityValue, unit: $unit)
@@ -84,7 +90,7 @@ struct IngredientDetailsView: View {
                                 .frame(height: 35)
                                 .padding()
                                 .shadow(color: (acceptibleSubmission()) ? Color.green : Color.orange, radius: 2)
-                            Text("Add Ingredient")
+                            Text("Submit Changes")
                                 .foregroundColor(Color.white)
                                 .frame(alignment: .center)
                            }
@@ -92,27 +98,25 @@ struct IngredientDetailsView: View {
                     }
                     .background(Color.themeBackground)
                 }
-                .navigationBarTitle("Add Ingredient", displayMode: .automatic)
-                .navigationBarItems(leading: Button(action: {
-                    
-                }) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 20))
-                        .foregroundColor(Color.black)
-                }, trailing: Button(action: {
-                    self.isLiked.toggle()
-                }) {
-                    Image(systemName: (isLiked) ? "heart.fill" : "heart")
-                        .font(.system(size: 20))
-                        .foregroundColor((isLiked) ? Color.red : Color.black)
-                })
+                
                 
             }
+            .navigationBarTitle("Add Ingredient", displayMode: .large)
+            .navigationBarItems(leading: Button(action: {
+
+            }) {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 20))
+                    .foregroundColor(Color.black)
+            }, trailing: Button(action: {
+                self.isLiked.toggle()
+            }) {
+                Image(systemName: (isLiked) ? "heart.fill" : "heart")
+                    .font(.system(size: 20))
+                    .foregroundColor((isLiked) ? Color.red : Color.black)
+            })
             .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
-            
-    }
-        
-        
+        }
 }
     
     func acceptibleSubmission() -> Bool {

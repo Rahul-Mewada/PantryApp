@@ -10,7 +10,6 @@ import Foundation
 
 class SingleUnit: Dimension {
     static let unit = SingleUnit(symbol: "units", converter: UnitConverterLinear(coefficient: 1))
-    
     static let baseUnit = SingleUnit.unit
 
 }

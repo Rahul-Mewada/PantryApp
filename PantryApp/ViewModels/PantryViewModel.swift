@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 class PantryViewModel: ObservableObject {
     
@@ -26,6 +26,9 @@ class PantryViewModel: ObservableObject {
         // Initializing test array of ingredients
         var testRecipeIngredients: Array<PantryModel.Ingredient> {
             [
+                PantryModel.Ingredient(name: "Chicken", value: 500, unit: .gram, status: .stocked, category: "Meat", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Beef", value: 3, unit: .kilogram, status: .stocked, category: "Meat", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
             ]
         }
         
@@ -57,6 +60,7 @@ class PantryViewModel: ObservableObject {
         return PantryModel(ingredientsInPantry: testRecipeIngredients, recipesInPantry: testRecipeInPantry)
         
     }
+    
     
     
     //MARK: - Accesing The Model
@@ -93,5 +97,37 @@ class PantryViewModel: ObservableObject {
     
     func addStore(add store: String) {
         pantryModel.addStore(store: store)
+    }
+    
+    func returnBoxColor(from status: PantryModel.status, type: String, content: String) -> Color{
+        switch status {
+        case .stocked:
+            if content == "stocked" {
+                return (type == "Box") ? Color.greenBox :  Color.greenText
+            } else {
+                return (type == "Box") ? Color.grayBox :  Color.grayText
+            }
+        case .low:
+            if content == "low" {
+                return (type == "Box") ? Color.yellowBox :  Color.yellowText
+            } else {
+                return (type == "Box") ? Color.grayBox :  Color.grayText
+            }
+            
+        case .out:
+            if content == "out" {
+                return (type == "Box") ? Color.redBox :  Color.redText
+            } else {
+                return (type == "Box") ? Color.grayBox :  Color.grayText
+            }
+            
+        case .expired:
+            if content == "expired" {
+                return (type == "Box") ? Color.purpleBox :  Color.purpleText
+            } else {
+                return (type == "Box") ? Color.grayBox :  Color.grayText
+            }
+            
+        }
     }
 }
