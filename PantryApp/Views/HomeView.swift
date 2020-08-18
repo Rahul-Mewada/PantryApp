@@ -12,82 +12,97 @@ import SwiftUI
 struct HomeView: View {
     @ObservedObject var viewModel: PantryViewModel
     var body: some View {
-        GeometryReader { screenGeometry in
+        NavigationView {
             ZStack {
                 Color.yellow
-                    .edgesIgnoringSafeArea(.all)
-                ZStack(alignment: .bottom) {
-                        ScrollView(.vertical, showsIndicators: false) {
-                                VStack(spacing: 0) {
-                                    homeHelloView()
-                                        .padding()
-                                    ScrollView(.horizontal, showsIndicators: false) {
-                                        HStack(alignment: .top) {
-                                            ForEach(self.viewModel.recipiesInPantry) { recipe  in
-                                                recipePantryView(recipe: recipe)
-                                            }
-                                            ZStack() {
-                                                RoundedRectangle(cornerRadius: 20)
-                                                    .foregroundColor(Color.gray.opacity(0.4))
-                                                    .shadow(color: Color.gray.opacity(0.4), radius: 5)
-                                                VStack(spacing: 0) {
-                                                    Image(systemName: "plus.circle.fill").font(.largeTitle)
-                                                        .padding()
-                                                    Text("Add Recipe")
-                                                        .font(Font.callout)
-                                                }
-                                            }
-                                                .padding(.leading)
-                                                .frame(height: UIScreen.main.bounds.size.height/3.515)
-                                                .aspectRatio(1/1.38, contentMode: .fit)
-                                            
-                                        }
-                                        .padding(.top, 7)
-                                        .padding(.bottom)
-                                    }
-                                    ScrollView(.horizontal, showsIndicators: false ) {
-                                        HStack(spacing: 23) {
-                                            Text("All Categories")
-                                                .fontWeight(.bold)
-                                            ForEach(self.viewModel.categoriesInPantry, id:  \.self) {category in
-                                                Text("\(category)")
-                                            }
-                                        }.padding(.horizontal)
-                                    }
-                                    Spacer(minLength: 20)
-                                    VStack(spacing: 0) {
-                                        Spacer(minLength: 10)
-                                        ForEach(self.viewModel.ingredientsInPantry) { ingredient in
-                                            ingredientPantryView(viewModel: self.viewModel, ingredient: ingredient)
-                                                .padding(.vertical, 3)
-                                                .padding(.horizontal)
-                                        }
-                                    }
-                                    .background(Color.themeForeground)
-                                .clipShape(RoundedRectangle(cornerRadius: 7))
-                                    .padding(.horizontal)
-                                    
-                                }
-                                .padding(.top, screenGeometry.safeAreaInsets.top)
-                                
-                            
-                        }
-                        .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
-                        .clipShape(RoundedRectangle(cornerRadius: 33))
-                        
-                    }
-                    .padding(.top, screenGeometry.safeAreaInsets.top)
-                    .padding(.bottom, 5)
-                    .edgesIgnoringSafeArea(.all)
-                    .frame(width: screenGeometry.size.width - 10, height: screenGeometry.size.height)
-                    
-                
+                        .edgesIgnoringSafeArea(.all)
+                landingView(viewModel: self.viewModel)
             }
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
         }
         
     }
 }
 
+struct landingView: View {
+    @ObservedObject var viewModel: PantryViewModel
+    var body: some View {
+        GeometryReader { screenGeometry in
+                        ZStack(alignment: .bottom) {
+                                ScrollView(.vertical, showsIndicators: false) {
+                                        VStack(spacing: 0) {
+                                            
+                    //MARK: Welcome View
+                                            homeHelloView()
+                                                .padding()
+                                            
+                    //MARK: Recipe Scroll View
+                                            ScrollView(.horizontal, showsIndicators: false) {
+                                                HStack(alignment: .top) {
+                                                    ForEach(self.viewModel.recipiesInPantry) { recipe  in
+                                                        recipePantryView(recipe: recipe)
+                                                    }
+                                                    ZStack() {
+                                                        RoundedRectangle(cornerRadius: 20)
+                                                            .foregroundColor(Color.gray.opacity(0.4))
+                                                            .shadow(color: Color.gray.opacity(0.4), radius: 5)
+                                                        VStack(spacing: 0) {
+                                                            Image(systemName: "plus.circle.fill").font(.largeTitle)
+                                                                .padding()
+                                                            Text("Add Recipe")
+                                                                .font(Font.callout)
+                                                        }
+                                                    }
+                                                        .padding(.leading)
+                                                        .frame(height: UIScreen.main.bounds.size.height/3.515)
+                                                        .aspectRatio(1/1.38, contentMode: .fit)
+                                                    
+                                                }
+                                                .padding(.top, 7)
+                                            }
+                                            Spacer(minLength: 20)
+                    //MARK: Categories Scroll View
+                                            ScrollView(.horizontal, showsIndicators: false ) {
+                                                HStack(spacing: 23) {
+                                                    Text("All Categories")
+                                                        .fontWeight(.semibold)
+                                                    ForEach(self.viewModel.categoriesInPantry, id:  \.self) {category in
+                                                        Text("\(category)")
+                                                    }
+                                                }.padding(.horizontal)
+                                            }
+                                            Spacer(minLength: 10)
+                                            
+                    //MARK: Ingredients View
+                                            VStack(spacing: 0) {
+                                                //Spacer(minLength: 10)
+                                                ForEach(self.viewModel.ingredientsInPantry) { ingredient in
+                                                    ingredientPantryView(viewModel: self.viewModel, ingredient: ingredient)
+        //                                                .padding(.vertical, 3)
+        //                                                .padding(.horizontal)
+                                                }
+                                            }
+                                            .background(Color.themeForeground)
+                                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                                            .padding(.horizontal)
+                                            
+                                        }
+                                        .padding(.top, screenGeometry.safeAreaInsets.top)
+                                        
+                                    
+                                }
+                                .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
+                                .clipShape(RoundedRectangle(cornerRadius: 33))
+                                
+                            }
+                            .padding(.top, screenGeometry.safeAreaInsets.top)
+                            .padding(.bottom, 5)
+                            .edgesIgnoringSafeArea(.all)
+                            .frame(width: screenGeometry.size.width - 10, height: screenGeometry.size.height)
+            }
+}
+}
 
 //MARK:- Horizontal Recipe Card View Component
 struct recipePantryView: View {
@@ -104,7 +119,8 @@ struct recipePantryView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .clipped()
                         .padding(9)
-                        .blur(radius: 4, opaque: false)
+                        .blur(radius: 5, opaque: false)
+                        .opacity(0.4)
                     Image("\(recipe.image)")
                         .resizable()
                         .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -154,27 +170,32 @@ struct ingredientPantryView :View {
                                                           selectedStore: self.ingredient.storePref ?? "No Prefence",
                                                           hasStore: (self.ingredient.storePref != nil) ? true : false,
                                                           isRecurring: self.ingredient.recurring,
-                                                          isLiked: self.ingredient.isLiked ?? false)) {
-            VStack {
-                HStack {
-                 VStack(alignment: .leading) {
-                     Text("\(ingredient.name)")
-                     Text("\(ingredient.status?.rawValue ?? "")")
+            isLiked: self.ingredient.isLiked ?? false).navigationBarTitle("").navigationBarHidden(true)) {
+                
+            VStack(spacing: 0) {
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("\(ingredient.name)").fontWeight(.semibold)
+                        Text("\(ingredient.status?.rawValue ?? "")").font(Font.caption)
                  }
                  Spacer()
-                 VStack(alignment: .trailing) {
-                    returnMeasurement(ingredient: ingredient)
-                    Text("\(ingredient.category ?? "")")
-                
+                    VStack(alignment: .trailing, spacing: 3) {
+                    returnMeasurement(ingredient: ingredient).font(.custom("FONT_NAME", size: 14))
+                        Text("\(ingredient.category ?? "")").font(.custom("FONT_NAME", size: 10)).foregroundColor(Color.grayText)
+
                     }
                     Image(systemName: "chevron.right")
                         .padding(.leading, 10)
                         .font(Font.body)
-                 }
+                        .foregroundColor(Color.grayText)
+                }
+                .font(Font.callout)
+                .padding(10)
                 Divider()
             }
-            .foregroundColor(Color.black)
+                                                          .foregroundColor(Color.black)
         }
+
     }
 }
 

@@ -5,7 +5,6 @@
 //  Created by Rahul Mewada on 7/22/20.
 //  Copyright © 2020 Rahul Mewada. All rights reserved.
 //
-
 import SwiftUI
 
 
@@ -43,11 +42,9 @@ struct IngredientDetailsView: View {
     
     
     var body: some View {
-        //changeNavBarColor()
         return NavigationView {
             ScrollView {
                 ZStack {
-                    Color.themeBackground.edgesIgnoringSafeArea(.top)
                     VStack {
                         statusSelection(viewModel: viewModel, currentStatus: $ingredientStatus)
                             .padding(.vertical, 5)
@@ -67,6 +64,7 @@ struct IngredientDetailsView: View {
                         recurringPicker(isRecurring: $isRecurring)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
+
                         
                         Button(action: {
                             if self.acceptibleSubmission() == true {
@@ -101,20 +99,8 @@ struct IngredientDetailsView: View {
                 
                 
             }
-            .navigationBarTitle("Add Ingredient", displayMode: .large)
-            .navigationBarItems(leading: Button(action: {
-
-            }) {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 20))
-                    .foregroundColor(Color.black)
-            }, trailing: Button(action: {
-                self.isLiked.toggle()
-            }) {
-                Image(systemName: (isLiked) ? "heart.fill" : "heart")
-                    .font(.system(size: 20))
-                    .foregroundColor((isLiked) ? Color.red : Color.black)
-            })
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
             .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
         }
 }

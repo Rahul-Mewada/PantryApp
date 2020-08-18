@@ -82,7 +82,7 @@ struct expiresPicker: View {
                             .padding(.horizontal)
                             
                         }
-                       }
+                        }  .fixedSize()
                            .background(Color.white)
                            .clipShape(RoundedRectangle(cornerRadius: 5))
                     }

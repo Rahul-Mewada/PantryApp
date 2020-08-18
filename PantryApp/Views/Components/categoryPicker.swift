@@ -171,6 +171,7 @@ struct categoryPicker: View {
                                 }
                             }
                         }
+                            .fixedSize(horizontal: false, vertical: true)
                             .font(Font.subheadline)
                             .padding(.bottom)
                             .clipShape(RoundedRectangle(cornerRadius: 5))

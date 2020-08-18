@@ -11,10 +11,6 @@ import SwiftUI
 
 struct AddIngredientView: View {
     
-//    func changeNavBarColor() {
-//       UINavigationBar.appearance().backgroundColor = UIColor.init(red: 241, green: 241, blue: 241)
-//    }
-    
     @ObservedObject var viewModel: PantryViewModel
     
     @State var ingredientName:String = ""
