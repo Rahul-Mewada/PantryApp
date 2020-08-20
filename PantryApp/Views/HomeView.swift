@@ -13,23 +13,38 @@ struct HomeView: View {
     @ObservedObject var viewModel: PantryViewModel
     var body: some View {
         NavigationView {
-            ZStack {
-                Color.yellow
-                        .edgesIgnoringSafeArea(.all)
-                landingView(viewModel: self.viewModel)
-            }
+            GeometryReader { geometry in
+                ZStack(alignment: .bottom) {
+                    landingView(viewModel: self.viewModel)
+                    
+//                    RoundedRectangle(cornerRadius: 5)
+//                        .edgesIgnoringSafeArea(.bottom)
+//                        .frame(width: geometry.size.width - 10, height: geometry.size.height/11, alignment: .bottom)
+//                        .edgesIgnoringSafeArea(.bottom)
+                    tabBar(geometry: geometry)
+                        .edgesIgnoringSafeArea(.bottom)
+                    
+                    
+                }
+                    .clipShape(RoundedRectangle(cornerRadius: 38))
+                    .padding(.horizontal, 5)
+                    .padding(.bottom, 5)
+                    .edgesIgnoringSafeArea(.bottom)
+                    .background(Color.yellow.edgesIgnoringSafeArea(.all))
+
         .navigationBarTitle("")
         .navigationBarHidden(true)
         }
-        
     }
+  }
 }
 
 struct landingView: View {
     @ObservedObject var viewModel: PantryViewModel
     var body: some View {
         GeometryReader { screenGeometry in
-                        ZStack(alignment: .bottom) {
+
+                            ZStack {
                                 ScrollView(.vertical, showsIndicators: false) {
                                         VStack(spacing: 0) {
                                             
@@ -92,14 +107,11 @@ struct landingView: View {
                                         
                                     
                                 }
-                                .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
-                                .clipShape(RoundedRectangle(cornerRadius: 33))
+                                    .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
                                 
                             }
-                            .padding(.top, screenGeometry.safeAreaInsets.top)
-                            .padding(.bottom, 5)
-                            .edgesIgnoringSafeArea(.all)
-                            .frame(width: screenGeometry.size.width - 10, height: screenGeometry.size.height)
+                             
+
             }
 }
 }
