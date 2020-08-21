@@ -16,11 +16,6 @@ struct HomeView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .bottom) {
                     landingView(viewModel: self.viewModel)
-                    
-//                    RoundedRectangle(cornerRadius: 5)
-//                        .edgesIgnoringSafeArea(.bottom)
-//                        .frame(width: geometry.size.width - 10, height: geometry.size.height/11, alignment: .bottom)
-//                        .edgesIgnoringSafeArea(.bottom)
                     tabBar(geometry: geometry)
                         .edgesIgnoringSafeArea(.bottom)
                     
@@ -28,7 +23,7 @@ struct HomeView: View {
                 }
                     .clipShape(RoundedRectangle(cornerRadius: 38))
                     .padding(.horizontal, 5)
-                    .padding(.bottom, 5)
+                    .padding(.bottom, 10)
                     .edgesIgnoringSafeArea(.bottom)
                     .background(Color.yellow.edgesIgnoringSafeArea(.all))
 
@@ -105,8 +100,8 @@ struct landingView: View {
                                         }
                                         .padding(.top, screenGeometry.safeAreaInsets.top)
                                         
-                                    
                                 }
+                                    .padding(.bottom, screenGeometry.size.height/10)
                                     .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
                                 
                             }

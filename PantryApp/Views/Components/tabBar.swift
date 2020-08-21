@@ -17,17 +17,17 @@ struct tabBar: View {
                    RoundedRectangle(cornerRadius: 5)
                     .frame(width: geometry.size.width - 10, height: geometry.size.height/11 + 10, alignment: .bottom)
                     .fixedSize()
+                    .foregroundColor(Color.themeForeground)
+                    .shadow(color: Color.gray.opacity(0.2), radius: 10)
 
-                    HStack() {
-                        Spacer()
-                        
+                    HStack(spacing: (geometry.size.width - 10)/8) {
+
+                                                
                         Button(action: {
                             
                         }) {
                             Image(systemName: "house")
                         }
-                        
-                        Spacer()
                         
                         Button(action: {
                             
@@ -35,7 +35,8 @@ struct tabBar: View {
                             Image(systemName: "archivebox")
                         }
                         
-                        Spacer(minLength: geometry.size.height/10 + 30)
+                        Circle().frame(width: geometry.size.height/10 - 20, height: geometry.size.height/10 - 20, alignment: .center).foregroundColor(Color.clear)
+                        
                         
                         Button(action: {
                             
@@ -43,20 +44,21 @@ struct tabBar: View {
                             Image(systemName: "book")
                         }
                         
-                        Spacer()
                         
                         Button(action: {
                             
                         }) {
                             Image(systemName: "person")
                         }
-                        
-                        Spacer()
+
                     }.padding(.bottom, 10)
-                     .font(Font.custom("Custom1", size: 20))
+                     .font(Font.system(size: 21, weight: .regular))
+                        .foregroundColor(Color.grayText)
                     
                 }
-                plusCircle(geometry: geometry).offset(x: 0, y: -15)
+                plusCircle(geometry: geometry)
+                    .frame(alignment: .center)
+                    
             }
         
            
@@ -72,32 +74,35 @@ struct plusCircle: View {
         return ZStack(alignment: .bottom) {
             if showAddition {
                 //Color.black.opacity(0.5)
-                VisualEffectView(effect: UIBlurEffect(style: .light))
-                    //.opacity(0.5)
+                VisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialLight))
+                    //.opacity(0.)
                     .edgesIgnoringSafeArea(.all)
                     .frame(width: UIScreen.main.bounds.width, height:UIScreen.main.bounds.height, alignment: .center)
                     .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.2)))
                     .onTapGesture {
                         self.showAddition = false
                 }
+                
             }
-            VStack(spacing: 30) {
+            VStack(spacing: 21) {
                 if showAddition == true {
-                    additionalView()
-                        .transition(AnyTransition.asymmetric(insertion: AnyTransition.move(edge: .bottom), removal: AnyTransition.move(edge: .bottom)))
-                        .animation(.linear(duration: 0.15))
+                    additionalView(geometry: geometry)
+                        .transition(AnyTransition.move(edge: .bottom).combined(with: AnyTransition.opacity.animation(.easeInOut(duration: 0.3))))
+                        .animation(.easeInOut)
                 }
                 Button (action: {
                     self.showAddition.toggle()
                 }) {
                     ZStack {
-                        Circle().frame(width: geometry.size.height/10 - 20, height: geometry.size.height/10 - 20, alignment: .center)
+                        Circle()
+                            .frame(width: geometry.size.height/10 - 20, height: geometry.size.height/10 - 20, alignment: .center)
+                            .foregroundColor(Color.yellow)
                         Image(systemName: "plus")
-                            .foregroundColor(Color.white)
-                            .font(Font.custom("Custom", size: 25))
-                            .rotationEffect((showAddition) ? .init(degrees: 45) : .init(degrees: 0))
-                            .animation(.default)
-                    }
+                        .foregroundColor(Color.white)
+                        .font(Font.system(size: 25, weight: .bold))
+                        .rotationEffect((showAddition) ? .init(degrees: 45) : .init(degrees: 0))
+                        .animation(.linear(duration: 0.2))
+                    }.padding(.bottom, 15)
                     
                 }
             
@@ -108,11 +113,14 @@ struct plusCircle: View {
 }
 
 struct additionalView : View {
+    var geometry: GeometryProxy
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10).frame(width: 200, height: 100, alignment: .center)
+        VStack(spacing: 10) {
+            RoundedRectangle(cornerRadius: 25).frame(width: geometry.size.width - 40, height: geometry.size.height/5.47, alignment: .center)
                 .foregroundColor(Color.black)
-                
+            
+            RoundedRectangle(cornerRadius: 25).frame(width: geometry.size.width - 40, height: geometry.size.height/5.47, alignment: .center)
+            .foregroundColor(Color.black)
         }
             
     }
