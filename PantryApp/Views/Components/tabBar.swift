@@ -51,8 +51,8 @@ struct tabBar: View {
                             Image(systemName: "person")
                         }
 
-                    }.padding(.bottom, 10)
-                     .font(Font.system(size: 21, weight: .regular))
+                    }   .padding(.bottom, 10)
+                        .font(Font.system(size: 21, weight: .regular))
                         .foregroundColor(Color.grayText)
                     
                 }
@@ -68,13 +68,13 @@ struct tabBar: View {
 
 struct plusCircle: View {
     var geometry: GeometryProxy
-    @State var showAddition: Bool = false
+    @State var showAddition: Bool = true
     var body: some View {
         
         return ZStack(alignment: .bottom) {
             if showAddition {
                 //Color.black.opacity(0.5)
-                VisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialLight))
+                VisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
                     //.opacity(0.)
                     .edgesIgnoringSafeArea(.all)
                     .frame(width: UIScreen.main.bounds.width, height:UIScreen.main.bounds.height, alignment: .center)
@@ -95,7 +95,7 @@ struct plusCircle: View {
                 }) {
                     ZStack {
                         Circle()
-                            .frame(width: geometry.size.height/10 - 20, height: geometry.size.height/10 - 20, alignment: .center)
+                            .frame(width: geometry.size.height/10 - 20, height: geometry.size.height/10 - 20, alignment: .bottom)
                             .foregroundColor(Color.yellow)
                         Image(systemName: "plus")
                         .foregroundColor(Color.white)
@@ -106,7 +106,7 @@ struct plusCircle: View {
                     
                 }
             
-           }
+            }.fixedSize()
         }
         .frame(width: geometry.size.width - 10, height: geometry.size.height, alignment: .bottom)
  }
@@ -116,11 +116,93 @@ struct additionalView : View {
     var geometry: GeometryProxy
     var body: some View {
         VStack(spacing: 10) {
-            RoundedRectangle(cornerRadius: 25).frame(width: geometry.size.width - 40, height: geometry.size.height/5.47, alignment: .center)
-                .foregroundColor(Color.black)
             
-            RoundedRectangle(cornerRadius: 25).frame(width: geometry.size.width - 40, height: geometry.size.height/5.47, alignment: .center)
-            .foregroundColor(Color.black)
+            ZStack {
+                RoundedRectangle(cornerRadius: 25)
+                    .frame(width: geometry.size.width - 40, alignment: .center)
+                    //.aspectRatio(1/0.4421, contentMode: .fit)
+                    .foregroundColor(Color.themeBackground)
+                VStack(spacing: 20) {
+                    Text("Logs & Planning")
+                        .padding(.top)
+                        .font(Font.system(size: 18,weight: .semibold))
+                    HStack() {
+                        VStack(alignment:.center) {
+                            Circle()
+                                .frame(width: 70, height: 70)
+                            Text("Log Food")
+                        }
+                            .frame(width: 90, height: 95)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom)
+                            
+                        VStack(alignment:.center) {
+                            Circle()
+                                .frame(width: 70, height: 70)
+                            Text("Plan Meals")
+                        }
+                            .frame(width: 90, height: 95)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom)
+                        
+                        VStack(alignment:.center) {
+                            Circle()
+                                .frame(width: 70, height: 70)
+                            Text("Track Calories")
+                        }
+                        .frame(width: 90, height: 95)
+                        .padding(.horizontal, 10)
+                        .padding(.bottom)
+                        
+                    }
+                    //.padding(.bottom)
+                    .font(Font.system(size: 12))
+                }
+            }
+            
+            ZStack {
+                RoundedRectangle(cornerRadius: 25)
+                    .frame(width: geometry.size.width - 40, alignment: .center)
+                    .aspectRatio(1/0.4421, contentMode: .fit)
+                    .foregroundColor(Color.themeBackground)
+                VStack(spacing: 20) {
+                    Text("New Meals & Ingredients")
+                        .padding(.top)
+                        .font(Font.system(size: 18,weight: .semibold))
+                    HStack() {
+                        VStack(alignment:.center) {
+                            Circle()
+                                .frame(width: 70, height: 70)
+                            Text("Add Ingredient")
+                        }
+                            .frame(width: 90, height: 95)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom)
+                            
+                        VStack(alignment:.center) {
+                            Circle()
+                                .frame(width: 70, height: 70)
+                            Text("Add Meal")
+                        }
+                            .frame(width: 90, height: 95)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom)
+                        
+                        VStack(alignment:.center) {
+                            Circle()
+                                .frame(width: 70, height: 70)
+                            Text("Find Recipes")
+                        }
+                        .frame(width: 90, height: 95)
+                        .padding(.horizontal, 10)
+                        .padding(.bottom)
+                        
+                    }
+                    //.padding(.bottom)
+                    .font(Font.system(size: 12))
+                }
+
+            }
         }
             
     }
