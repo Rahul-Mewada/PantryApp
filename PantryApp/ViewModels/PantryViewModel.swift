@@ -29,6 +29,15 @@ class PantryViewModel: ObservableObject {
                 PantryModel.Ingredient(name: "Chicken", value: 500, unit: .gram, status: .stocked, category: "Meat", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
                 PantryModel.Ingredient(name: "Beef", value: 3, unit: .kilogram, status: .stocked, category: "Meat", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
                 PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
+                PantryModel.Ingredient(name: "Corn", value: 2, unit: .unit, status: .stocked, category: "Veggies", storePref: "Walmart", recurring: true, expireDate: Date(), isLiked: true),
             ]
         }
         

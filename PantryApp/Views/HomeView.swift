@@ -14,22 +14,23 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
-                ZStack(alignment: .bottom) {
-                    landingView(viewModel: self.viewModel)
-                    tabBar(geometry: geometry)
-                        .edgesIgnoringSafeArea(.bottom)
-                    
-                    
-                }
-                    .clipShape(RoundedRectangle(cornerRadius: 38))
-                    .padding(.horizontal, 5)
-                    .padding(.bottom, 10)
-                    .edgesIgnoringSafeArea(.bottom)
-                    .background(Color.yellow.edgesIgnoringSafeArea(.all))
 
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+                ZStack(alignment: .bottom) {
+                    RoundedRectangle(cornerRadius: 38)
+                        .foregroundColor(Color.themeBackground)
+                        .overlay(landingView(viewModel: self.viewModel)
+                        .cornerRadius(38)
+                        .clipped())
+                        .padding(.horizontal, 5)
+                        .padding(.bottom, 5)
+                        .edgesIgnoringSafeArea(.bottom)
+                }
+                    .navigationBarTitle("Home")
+                    .navigationBarHidden(true)
+                    .background(Color.yellow.edgesIgnoringSafeArea(.all))
+                    //.background(Image("rainbowBackground"))
         }
+            //landingView(viewModel: self.viewModel)
     }
   }
 }
@@ -38,7 +39,6 @@ struct landingView: View {
     @ObservedObject var viewModel: PantryViewModel
     var body: some View {
         GeometryReader { screenGeometry in
-
                             ZStack {
                                 ScrollView(.vertical, showsIndicators: false) {
                                         VStack(spacing: 0) {
@@ -88,7 +88,7 @@ struct landingView: View {
                                             VStack(spacing: 0) {
                                                 //Spacer(minLength: 10)
                                                 ForEach(self.viewModel.ingredientsInPantry) { ingredient in
-                                                    ingredientPantryView(viewModel: self.viewModel, ingredient: ingredient)
+                                                    ingredientPantryView(viewModel: self.viewModel, ingredient: ingredient, geometry: screenGeometry)
         //                                                .padding(.vertical, 3)
         //                                                .padding(.horizontal)
                                                 }
@@ -105,6 +105,8 @@ struct landingView: View {
                                     .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
                                 
                             }
+                            .navigationBarHidden(true)
+                            .overlay(tabBar(geometry: screenGeometry), alignment: .bottom)
                              
 
             }
@@ -163,6 +165,7 @@ struct recipePantryView: View {
 struct ingredientPantryView :View {
     @ObservedObject var viewModel: PantryViewModel
     @State var ingredient: PantryModel.Ingredient
+    var geometry: GeometryProxy
     
     var body: some View {
         NavigationLink(destination: IngredientDetailsView(viewModel: self.viewModel,
@@ -177,7 +180,10 @@ struct ingredientPantryView :View {
                                                           selectedStore: self.ingredient.storePref ?? "No Prefence",
                                                           hasStore: (self.ingredient.storePref != nil) ? true : false,
                                                           isRecurring: self.ingredient.recurring,
-            isLiked: self.ingredient.isLiked ?? false).navigationBarTitle("").navigationBarHidden(true)) {
+            isLiked: self.ingredient.isLiked ?? false)
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
+                ) {
                 
             VStack(spacing: 0) {
                 HStack(alignment: .center) {
@@ -237,5 +243,17 @@ func returnMeasurement(ingredient: PantryModel.Ingredient) -> some View {
         } else {
             return Text("")
         }
+    }
+}
+
+
+extension UINavigationController: UIGestureRecognizerDelegate {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = self
+    }
+
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return viewControllers.count > 1
     }
 }
