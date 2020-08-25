@@ -1,16 +1,16 @@
 //
-//  miniHeader.swift
+//  fullHeader.swift
 //  PantryApp
 //
-//  Created by Rahul Mewada on 8/22/20.
+//  Created by Rahul Mewada on 8/25/20.
 //  Copyright © 2020 Rahul Mewada. All rights reserved.
 //
 
 import SwiftUI
 
-struct miniHeader: View {
+struct fullHeader: View {
     
-    @Binding var ingredientName: String
+    var ingredientName: String
     @Binding var isLiked: Bool
     
     
@@ -33,9 +33,8 @@ struct miniHeader: View {
         }
             .font(Font.system(size: 20).weight(.bold))
             .padding()
-            .padding(.top)
-            .background(Color.themeBackground)
-            .cornerRadius(38, corners: [.topLeft, .topRight])
+//            .padding(.top)
+        .background(Color.themeBackground.edgesIgnoringSafeArea(.top))
     }
 }
 

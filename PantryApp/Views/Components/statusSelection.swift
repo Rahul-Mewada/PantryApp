@@ -15,6 +15,7 @@ struct statusSelection:View {
     
     @ObservedObject var viewModel: PantryViewModel
     @Binding var currentStatus: PantryModel.status
+    var showFull: Bool
     //@Binding var didChange: Bool
 //    var stockedColor: Color {
 //        switch self.currentStatus {
@@ -83,34 +84,37 @@ struct statusSelection:View {
                             .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "low"))
                     }
                 }
+                
+                if showFull {
+                    Spacer()
 
-                Spacer()
+                    Button(action: {
+                        self.currentStatus = .out
+                    }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 5)
+                                .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "out"))
+                                .frame(height: 35)
+                            Text("Out")
+                                .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "out"))
+                        }
+                    }
 
-                Button(action: {
-                    self.currentStatus = .out
-                }) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "out"))
-                            .frame(height: 35)
-                        Text("Out")
-                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "out"))
+                    Spacer()
+
+                    Button(action: {
+                        self.currentStatus = .expired
+                    }) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 5)
+                                .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "expired"))
+                                .frame(height: 35)
+                            Text("Expired")
+                                .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "expired"))
+                        }
                     }
                 }
-
-                Spacer()
-
-                Button(action: {
-                    self.currentStatus = .expired
-                }) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Box", content: "expired"))
-                            .frame(height: 35)
-                        Text("Expired")
-                            .foregroundColor(viewModel.returnBoxColor(from: self.currentStatus, type: "Text", content: "expired"))
-                    }
-                }
+                
             }
 
         }

@@ -12,8 +12,9 @@ import SwiftUI
 struct AddIngredientView: View {
     
     @ObservedObject var viewModel: PantryViewModel
-    
     @State var ingredientName:String = ""
+    
+    @State var ingredientStatus: PantryModel.status = .stocked
     
     @State var expireDate: Date = Date()
     @State var hasExpireDate: Bool = true
@@ -40,7 +41,11 @@ struct AddIngredientView: View {
             ScrollView {
                 ZStack {
                     VStack {
+                        Spacer(minLength: 60)
                         nameTextField(ingredientName: $ingredientName)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal)
+                        statusSelection(viewModel: viewModel, currentStatus: $ingredientStatus, showFull: false)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
                         quantityPicker(viewModel: viewModel, value: $quantityValue, unit: $unit)
@@ -95,17 +100,19 @@ struct AddIngredientView: View {
                 
                 
             }
-            .navigationBarTitle("Add Ingredient", displayMode: .large)
-            .navigationBarItems(leading: Button(action: {
-                
-            }) {
-                Image(systemName: "chevron.left").font(.system(size: 20)).foregroundColor(Color.black)
-            }, trailing: Button(action: {
-                self.isLiked.toggle()
-            }) {
-                Image(systemName: (isLiked) ? "heart.fill" : "heart").font(.system(size: 20)).foregroundColor((isLiked) ? Color.red : Color.black)
-            })
-            .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
+            .overlay(fullHeader(ingredientName: "Add Ingredient", isLiked: self.$isLiked), alignment: .top)
+                .navigationBarTitle("Add Ingredient", displayMode: .automatic)
+                .navigationBarItems(leading: Button(action: {
+                    
+                }) {
+                    Image(systemName: "chevron.left").font(.system(size: 20)).foregroundColor(Color.black)
+                }, trailing: Button(action: {
+                    self.isLiked.toggle()
+                }) {
+                    Image(systemName: (isLiked) ? "heart.fill" : "heart").font(.system(size: 20)).foregroundColor((isLiked) ? Color.red : Color.black)
+                })
+                .navigationBarHidden(true)
+                .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
     }
 }
     

@@ -14,7 +14,13 @@ struct expiresPicker: View {
     @State var showPicker: Bool = false
     @Binding var expireDate: Date
     @Binding var hasExpire: Bool
-    
+    var expiresSoon: Bool {
+        if expireDate < (Date().addingTimeInterval(604800)) {
+            return true
+        } else {
+            return false
+        }
+    }
     
     var body: some View {
         
@@ -49,6 +55,8 @@ struct expiresPicker: View {
                             Text("\(dateString)")
                                 .padding()
                                 .font(Font.subheadline)
+                                //.foregroundColor(Color.red)
+                                .foregroundColor((expiresSoon) ? Color.orange : Color.green)
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .rotationEffect(.degrees(showPicker ? 90 : 0))
@@ -62,8 +70,8 @@ struct expiresPicker: View {
                     if showPicker {
                        Divider().padding(.horizontal)
                        VStack(spacing: 0) {
-                           DatePicker("Date", selection: $expireDate, displayedComponents: .date)
-                           .labelsHidden()
+                        DatePicker("Date", selection: $expireDate, in: Date()..., displayedComponents: .date)
+                            .labelsHidden()
                         Button(action: {
                             self.hasExpire = false
                             withAnimation(.spring()) {

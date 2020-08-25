@@ -117,7 +117,7 @@ struct innerIngredientView: View {
         ScrollView {
             ZStack {
                 VStack {
-                    statusSelection(viewModel: self.viewModel, currentStatus: self.$ingredientStatus)
+                    statusSelection(viewModel: self.viewModel, currentStatus: self.$ingredientStatus, showFull: true)
                         .padding(.vertical, 5)
                         .padding(.horizontal)
                     quantityPicker(viewModel: self.viewModel, value: self.$quantityValue, unit: self.$unit)
