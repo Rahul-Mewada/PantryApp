@@ -14,7 +14,7 @@ struct recurringPicker: View {
         VStack(spacing: 5) {
             Text("Add to SmartList when low")
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .font(Font.body)
+                .font(Font.body.bold())
             ZStack {
                 Color.themeForeground
                     .clipShape(RoundedRectangle(cornerRadius: 5))

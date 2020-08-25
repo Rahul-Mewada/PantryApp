@@ -169,13 +169,13 @@ struct ingredientPantryView :View {
     
     var body: some View {
         NavigationLink(destination: IngredientDetailsView(viewModel: self.viewModel,
-                                                          ingredientPassed: self.ingredient,
+                                                          ingredientPassed: self.$ingredient,
                                                           ingredientName: self.ingredient.name,
                                                           ingredientStatus: self.ingredient.status ?? .stocked,
                                                           expireDate: self.ingredient.expireDate ?? Date(),
                                                           hasExpireDate: (self.ingredient.expireDate != nil) ? true : false,
-                                                          quantityValue: String(0),
-                                                          unit: .cup,
+                                                          quantityValue: String(unwrapMeasurement(ingredient: self.ingredient).0),
+                                                          unit: unwrapMeasurement(ingredient: self.ingredient).1,
                                                           selectedCategory: self.ingredient.category ?? "",
                                                           selectedStore: self.ingredient.storePref ?? "No Prefence",
                                                           hasStore: (self.ingredient.storePref != nil) ? true : false,
@@ -225,14 +225,22 @@ func returnMeasurement(ingredient: PantryModel.Ingredient) -> some View {
     switch ingredient.unitPref {
     case .cup, .liter, .milliliter, .tablespoon, .teaspoon:
         if let unwrappedMeasurement = ingredient.measurementVol {
-            return Text("\(unwrappedMeasurement.value, specifier: "%.1f") \(unwrappedMeasurement.unit.symbol)")
+            if unwrappedMeasurement.value.truncatingRemainder(dividingBy: 1) == 0 {
+                return Text("\(unwrappedMeasurement.value, specifier: "%.0f") \(unwrappedMeasurement.unit.symbol)")
+            } else {
+                return Text("\(unwrappedMeasurement.value, specifier: "%.1f") \(unwrappedMeasurement.unit.symbol)")
+            }
         } else {
             print("Error in unwrapping ingredient.measurementVol")
             return Text("")
         }
     case .gram, .kilogram, .ounce, .pound:
         if let unwrappedMeasurement = ingredient.measurementMass {
-            return Text("\(unwrappedMeasurement.value, specifier: "%.1f") \(unwrappedMeasurement.unit.symbol)")
+            if unwrappedMeasurement.value.truncatingRemainder(dividingBy: 1) == 0 {
+                return Text("\(unwrappedMeasurement.value, specifier: "%.0f") \(unwrappedMeasurement.unit.symbol)")
+            } else {
+                return Text("\(unwrappedMeasurement.value, specifier: "%.1f") \(unwrappedMeasurement.unit.symbol)")
+            }
         } else {
             print("Error in unwrapping ingredient.measurementVol")
             return Text("")
@@ -246,6 +254,87 @@ func returnMeasurement(ingredient: PantryModel.Ingredient) -> some View {
     }
 }
 
+func unwrapMeasurement (ingredient: PantryModel.Ingredient) -> (Double, PantryModel.unitType) {
+    switch ingredient.unitPref {
+    case .cup:
+        if let unwrappedMeasurement = ingredient.measurementVol {
+            return (unwrappedMeasurement.value, PantryModel.unitType.cup)
+        } else {
+            print("Error in unwrapping measurementToString")
+            return (0, PantryModel.unitType.unit)
+        }
+    case .liter:
+        if let unwrappedMeasurement = ingredient.measurementVol {
+            return (unwrappedMeasurement.value, PantryModel.unitType.liter)
+        } else {
+            print("Error in unwrapping measurementToString")
+            return (0, PantryModel.unitType.unit)
+        }
+    case .milliliter:
+    if let unwrappedMeasurement = ingredient.measurementVol {
+        return (unwrappedMeasurement.value, PantryModel.unitType.milliliter)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+    
+    case .tablespoon:
+    if let unwrappedMeasurement = ingredient.measurementVol {
+        return (unwrappedMeasurement.value, PantryModel.unitType.tablespoon)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+    
+    case .teaspoon:
+    if let unwrappedMeasurement = ingredient.measurementVol {
+        return (unwrappedMeasurement.value, PantryModel.unitType.teaspoon)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+    
+    case .gram:
+    if let unwrappedMeasurement = ingredient.measurementMass {
+        return (unwrappedMeasurement.value, PantryModel.unitType.gram)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+    
+    case .kilogram:
+    if let unwrappedMeasurement = ingredient.measurementMass {
+        return (unwrappedMeasurement.value, PantryModel.unitType.kilogram)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+    
+    case .ounce:
+    if let unwrappedMeasurement = ingredient.measurementMass {
+        return (unwrappedMeasurement.value, PantryModel.unitType.ounce)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+    
+    case .pound:
+    if let unwrappedMeasurement = ingredient.measurementMass {
+        return (unwrappedMeasurement.value, PantryModel.unitType.pound)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+    
+    case .unit:
+    if let unwrappedMeasurement = ingredient.measurementUnit {
+        return (unwrappedMeasurement.value, PantryModel.unitType.unit)
+    } else {
+        print("Error in unwrapping measurementToString")
+        return (0, PantryModel.unitType.unit)
+    }
+}
+}
 
 extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {

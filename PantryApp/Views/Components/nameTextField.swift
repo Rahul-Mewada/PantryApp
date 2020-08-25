@@ -14,6 +14,7 @@ struct nameTextField: View {
         VStack {
             Text("Name")
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .font(Font.body.weight(.semibold))
             TextField("Enter the ingredient name", text: $ingredientName)
                 .font(Font.subheadline)
                 .padding(.vertical,5)

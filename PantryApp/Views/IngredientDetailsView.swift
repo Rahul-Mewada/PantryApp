@@ -12,7 +12,7 @@ struct IngredientDetailsView: View {
 
         
     @ObservedObject var viewModel: PantryViewModel
-    @State var ingredientPassed: PantryModel.Ingredient
+    var ingredientPassed: Binding<PantryModel.Ingredient>
     
     @State var ingredientName:String
         
@@ -42,7 +42,7 @@ struct IngredientDetailsView: View {
                     RoundedRectangle(cornerRadius: 38)
                         .foregroundColor(Color.themeBackground)
                         .overlay(innerIngredientView(viewModel: self.viewModel,
-                                                     ingredientPassed: self.$ingredientPassed,
+                                                     ingredientPassed: self.ingredientPassed,
                                                      ingredientName: self.$ingredientName,
                                                      ingredientStatus: self.$ingredientStatus,
                                                      expireDate: self.$expireDate,
@@ -59,7 +59,7 @@ struct IngredientDetailsView: View {
                             .padding(.top)
                             .clipped()
                             .cornerRadius(38)
-                            .overlay(miniHeader()
+                            .overlay(miniHeader(ingredientName: self.$ingredientName, isLiked: self.$isLiked)
                                     .clipped(), alignment: .top)//.cornerRadius(38)
                             
                         )
@@ -139,17 +139,21 @@ struct innerIngredientView: View {
                     
                     Button(action: {
                         if self.acceptibleSubmission() == true {
+                            let originalID = self.ingredientPassed.id
                             let doubleValue:Double = Double(self.quantityValue)!
-                            let ingredientToAdd: PantryModel.Ingredient = PantryModel.Ingredient(name: self.ingredientName,
+                            let ingredientToEdit: PantryModel.Ingredient = PantryModel.Ingredient(name: self.ingredientName,
                                                                                                  value: doubleValue,
                                                                                                  unit: self.unit,
-                                                                                                 status: .stocked,
+                                                                                                 status: self.ingredientStatus,
                                                                                                  category: self.selectedCategory,
                                                                                                  storePref: (self.hasStore) ? self.selectedStore : nil,
                                                                                                  recurring: self.isRecurring,
                                                                                                  expireDate: (self.hasExpireDate) ? self.expireDate : nil,
                                                                                                  isLiked: false)
-                            self.viewModel.addIngredientsToPantry(add: ingredientToAdd)
+                            self.ingredientPassed = ingredientToEdit
+                            self.ingredientPassed.id = originalID
+                            print("Ingredient Edited: \(self.ingredientPassed)")
+                            //self.viewModel.addIngredientsToPantry(add: ingredientToEdit)
                         }
                         
                     }) {
@@ -162,6 +166,7 @@ struct innerIngredientView: View {
                         Text("Submit Changes")
                             .foregroundColor(Color.white)
                             .frame(alignment: .center)
+                            .font(Font.body.weight(.bold))
                        }
                     }
                 }
@@ -171,6 +176,7 @@ struct innerIngredientView: View {
                 .padding(.bottom, geometry.size.height/10)
                 
         }
+        .padding(.top)
         .edgesIgnoringSafeArea(.all)
             
             

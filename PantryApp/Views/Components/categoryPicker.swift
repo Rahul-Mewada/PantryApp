@@ -55,7 +55,7 @@ struct categoryPicker: View {
         VStack(spacing: 5) {
             Text("\(title)")
             .frame(maxWidth: .infinity, alignment: .leading)
-            .font(Font.body)
+            .font(Font.body.weight(.semibold))
             ZStack {
                 VStack(spacing: 0) {
                     Button(action: {

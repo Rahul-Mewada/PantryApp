@@ -56,7 +56,7 @@ struct statusSelection:View {
         VStack(spacing: 5) {
             Text("Status")
             .frame(maxWidth: .infinity, alignment: .leading)
-            .font(Font.body)
+            .font(Font.body.weight(.semibold))
             HStack {
                 Button(action: {
                     self.currentStatus = .stocked

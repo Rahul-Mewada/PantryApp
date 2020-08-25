@@ -38,24 +38,28 @@ struct quantityPicker: View {
         VStack(spacing: 5) {
             Text("Quantity")
             .frame(maxWidth: .infinity, alignment: .leading)
-            .font(Font.body)
+            .font(Font.body.weight(.semibold))
                 HStack() {
-                    TextField("0", text: self.$value)
-                        .padding()
-                        .font(Font.subheadline)
-                        .keyboardType(.decimalPad)
-                        .frame(width: 60)
+                    Group {
+                        TextField("0", text: self.$value)
+                            .font(Font.subheadline)
+                            .keyboardType(.decimalPad)
+                            .frame(width: 50)
+                    }
+                    .padding(.leading)
                     Divider()
-                        .frame(height: 20)
+                    .frame(height: 20, alignment: .leading)
                     NavigationLink(destination: unitsView(viewModel: viewModel,  unit: $unit)) {
                         HStack {
                             Text("\(unit.rawValue)")
                                 .font(Font.subheadline)
                                 .padding(.leading, 10)
+                                .frame(alignment: .leading)
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .padding()
-                        }
+                                .frame(alignment: .trailing)
+                        }.frame(maxWidth: .infinity)
                     }
 
                 }

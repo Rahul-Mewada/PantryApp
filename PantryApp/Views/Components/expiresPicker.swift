@@ -33,7 +33,7 @@ struct expiresPicker: View {
         return VStack(spacing: 5) {
             Text("Expires")
             .frame(maxWidth: .infinity, alignment: .leading)
-            .font(Font.body)
+            .font(Font.body.weight(.semibold))
             ZStack {
 //                RoundedRectangle(cornerRadius: 5)
 //                    .foregroundColor(Color.white)
@@ -71,10 +71,10 @@ struct expiresPicker: View {
                             }
                         }) {
                             ZStack {
-                                Color.orange
+                                Color.grayBox
                                     .clipShape(RoundedRectangle(cornerRadius: 5))
                                 Text("No Expirey Date")
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(Color.black)
                                     .font(Font.subheadline)
                                     .padding(.vertical, 5)
                             }

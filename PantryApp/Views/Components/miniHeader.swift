@@ -9,14 +9,27 @@
 import SwiftUI
 
 struct miniHeader: View {
+    @Binding var ingredientName: String
+    @Binding var isLiked: Bool
+    
     var body: some View {
         HStack(alignment: .bottom) {
-            Image(systemName: "chevron.left")
+            Button(action: {
+                
+            }) {
+                Image(systemName: "chevron.left").foregroundColor(Color.black)
+            }
             Spacer()
-            Text("Ingredient Name")
+            Text("\(ingredientName)")
             Spacer()
-            Image(systemName:"heart")
+            
+            Button(action: {
+                self.isLiked.toggle()
+            }) {
+                Image(systemName: (isLiked) ? "heart.fill" : "heart").foregroundColor((isLiked) ? Color.red : Color.black)
+            }
         }
+            .font(Font.system(size: 20).weight(.bold))
             .padding()
             .padding(.top)
             .background(Color.themeBackground)
@@ -24,8 +37,3 @@ struct miniHeader: View {
     }
 }
 
-struct miniHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        miniHeader()
-    }
-}
