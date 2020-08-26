@@ -41,7 +41,7 @@ struct AddIngredientView: View {
             ScrollView {
                 ZStack {
                     VStack {
-                        Spacer(minLength: 60)
+                        Spacer(minLength: 60).fixedSize()
                         nameTextField(ingredientName: $ingredientName)
                             .padding(.vertical, 5)
                             .padding(.horizontal)

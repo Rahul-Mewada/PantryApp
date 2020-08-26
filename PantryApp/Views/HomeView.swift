@@ -11,6 +11,7 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var viewModel: PantryViewModel
+    @State var showAddIngredientView = false
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -18,7 +19,7 @@ struct HomeView: View {
                 ZStack(alignment: .bottom) {
                     RoundedRectangle(cornerRadius: 38)
                         .foregroundColor(Color.themeBackground)
-                        .overlay(landingView(viewModel: self.viewModel)
+                        .overlay(landingView(viewModel: self.viewModel, showAddIngredientView: self.$showAddIngredientView)
                         .cornerRadius(38)
                         .clipped())
                         .padding(.horizontal, 5)
@@ -31,12 +32,15 @@ struct HomeView: View {
                     //.background(Image("rainbowBackground"))
         }
             //landingView(viewModel: self.viewModel)
-    }
+        }.sheet(isPresented: self.$showAddIngredientView) {
+            AddIngredientView(viewModel: self.viewModel)
+        }
   }
 }
 
 struct landingView: View {
     @ObservedObject var viewModel: PantryViewModel
+    @Binding var showAddIngredientView: Bool
     var body: some View {
         GeometryReader { screenGeometry in
                             ZStack {
@@ -106,7 +110,7 @@ struct landingView: View {
                                 
                             }
                             .navigationBarHidden(true)
-                            .overlay(tabBar(geometry: screenGeometry), alignment: .bottom)
+                            .overlay(tabBar(viewModel: self.viewModel, geometry: screenGeometry, showAddIngredientView: self.$showAddIngredientView), alignment: .bottom)
                              
 
             }

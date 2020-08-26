@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct tabBar: View {
+    @ObservedObject var viewModel: PantryViewModel
     var geometry: GeometryProxy
-    
+    @Binding var showAddIngredientView: Bool
     var body: some View {
         ZStack(alignment: .bottom) {
             ZStack {
@@ -56,10 +57,11 @@ struct tabBar: View {
                     .foregroundColor(Color.grayText)
                 
             }
-            plusCircle(geometry: geometry)
+            plusCircle(geometry: geometry, showAddIngredientView: self.$showAddIngredientView)
                 .frame(alignment: .center)
                 
             }
+            
     
        
     }
@@ -70,6 +72,7 @@ struct tabBar: View {
 struct plusCircle: View {
     var geometry: GeometryProxy
     @State var showAddition: Bool = false
+    @Binding var showAddIngredientView: Bool
     var body: some View {
         
         return ZStack(alignment: .bottom) {
@@ -86,7 +89,7 @@ struct plusCircle: View {
             }
             VStack(spacing: 21) {
                 if showAddition == true {
-                    additionalView(geometry: geometry)
+                    additionalView(geometry: geometry, showAddIngredientView: self.$showAddIngredientView, showAddition: self.$showAddition)
                         .transition(AnyTransition.move(edge: .bottom).combined(with: AnyTransition.opacity.animation(.easeInOut(duration: 0.3))))
                         .animation(.easeInOut)
                 }
@@ -118,6 +121,8 @@ struct plusCircle: View {
 
 struct additionalView : View {
     var geometry: GeometryProxy
+    @Binding var showAddIngredientView: Bool
+    @Binding var showAddition: Bool
     var body: some View {
         VStack(spacing: 10) {
             
@@ -178,8 +183,17 @@ struct additionalView : View {
                         .font(Font.system(size: 18,weight: .semibold))
                     HStack() {
                         VStack(alignment:.center) {
-                            Circle()
+                            Button(action: {
+                                self.showAddition = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.24) {
+                                    self.showAddIngredientView = true
+                                }
+                                
+                            }) {
+                                Circle()
                                 .frame(width: 70, height: 70)
+                            }
+                            
                             Text("Add Ingredient")
                         }
                             .frame(width: 90, height: 95)
@@ -217,13 +231,6 @@ struct additionalView : View {
 
 
 
-struct tabBar_Previews: PreviewProvider {
-    static var previews: some View {
-        GeometryReader {geometry in
-            plusCircle(geometry: geometry).padding()
-        }
-    }
-}
 
 struct VisualEffectView: UIViewRepresentable {
     var effect: UIVisualEffect?
