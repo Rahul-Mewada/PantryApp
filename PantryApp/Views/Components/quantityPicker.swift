@@ -13,32 +13,29 @@ struct quantityPicker: View {
     @State var showPicker: Bool = false
     @Binding var value: String
     @Binding var unit: PantryModel.unitType
-    
+    var showTitle: Bool
     init(viewModel: PantryViewModel, value: Binding<String>, unit: Binding<PantryModel.unitType>) {
         self.viewModel = viewModel
         self._value = value
         self._unit = unit
+        self.showTitle = true
     }
     
-//    init(viewModel: PantryViewModel, ingredient: Binding<PantryModel.Ingredient>) {
-//        self.viewModel = viewModel
-//        self._unit = ingredient.unitPref
-//        var valueTemp: String
-//        switch self.unit {
-//        case .gram, .kilogram, .pound, .ounce:
-//            valueTemp = String(ingredient.measurementMass!.value)
-//        case .cup, .liter, .milliliter, .teaspoon, .tablespoon:
-//            valueTemp = String(ingredient.measurementVol!.value)
-//        case .unit:
-//            valueTemp = String(ingredient.measurementUnit!)
-//        }
-//    }
+    init(viewModel: PantryViewModel, value: Binding<String>, unit: Binding<PantryModel.unitType>, showTitle: Bool) {
+        self.viewModel = viewModel
+        self._value = value
+        self._unit = unit
+        self.showTitle = showTitle
+    }
     
     var body: some View {
         VStack(spacing: 5) {
-            Text("Quantity")
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .font(Font.body.weight(.semibold))
+            if showTitle {
+                Text("Quantity")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(Font.body.weight(.semibold))
+                
+            }
                 HStack() {
                     Group {
                         TextField("0", text: self.$value)

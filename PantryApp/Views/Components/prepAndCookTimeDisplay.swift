@@ -34,7 +34,8 @@ struct prepAndCookTimeDisplay: View {
                 }
             }
                 .onTapGesture {
-                    self.showPicker.toggle()
+                    self.showPicker
+                        .toggle()
                     self.isPrepTime = true
                 }
             

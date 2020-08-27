@@ -11,7 +11,7 @@ import Foundation
 struct PantryModel {
 
     //MARK: Ingredient Struct
-    struct Ingredient: Identifiable {
+    struct Ingredient: Identifiable, Hashable {
         var name: String
         var unitPref: unitType
         var measurementMass: Measurement<Unit>?
@@ -71,6 +71,50 @@ struct PantryModel {
                 self.unitPref = PantryModel.unitType.teaspoon
             case .unit:
                 self.measurementUnit = Measurement(value: value, unit: SingleUnit.unit)
+                self.unitPref = PantryModel.unitType.unit
+            }
+            self.status = status
+            self.id = UUID()
+            self.storePref = storePref
+            self.recurring = recurring
+            self.expireDate = expireDate
+            self.category = category
+            self.isLiked = isLiked
+        }
+        
+        init(name: String, value: String, unit: PantryModel.unitType, status: status, category: String, storePref: String?, recurring: Bool, expireDate: Date?, isLiked: Bool) {
+            let valueDouble = Double(value)
+            self.name = name
+            switch unit {
+            case .gram:
+                self.measurementMass = Measurement(value: valueDouble!, unit: UnitMass.grams)
+                self.unitPref = PantryModel.unitType.gram
+            case .kilogram:
+                self.measurementMass = Measurement(value: valueDouble!, unit: UnitMass.kilograms)
+                self.unitPref = PantryModel.unitType.kilogram
+            case .ounce:
+                self.measurementMass = Measurement(value: valueDouble!, unit: UnitMass.ounces)
+                self.unitPref = PantryModel.unitType.ounce
+            case .pound:
+                self.measurementMass = Measurement(value: valueDouble!, unit: UnitMass.pounds)
+                self.unitPref = PantryModel.unitType.pound
+            case .cup:
+                self.measurementVol = Measurement(value: valueDouble!, unit: UnitVolume.cups)
+                self.unitPref = PantryModel.unitType.cup
+            case .liter:
+                self.measurementVol = Measurement(value: valueDouble!, unit: UnitVolume.liters)
+                self.unitPref = PantryModel.unitType.liter
+            case .milliliter:
+                self.measurementVol = Measurement(value: valueDouble!, unit: UnitVolume.milliliters)
+                self.unitPref = PantryModel.unitType.cup
+            case .tablespoon:
+                self.measurementVol = Measurement(value: valueDouble!, unit: UnitVolume.tablespoons)
+                self.unitPref = PantryModel.unitType.tablespoon
+            case .teaspoon:
+                self.measurementVol = Measurement(value: valueDouble!, unit: UnitVolume.teaspoons)
+                self.unitPref = PantryModel.unitType.teaspoon
+            case .unit:
+                self.measurementUnit = Measurement(value: valueDouble!, unit: SingleUnit.unit)
                 self.unitPref = PantryModel.unitType.unit
             }
             self.status = status

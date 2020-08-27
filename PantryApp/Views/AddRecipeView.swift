@@ -20,6 +20,12 @@ struct AddRecipeView: View {
     @State var cookTime: TimeInterval = 0
     @State var showPicker: Bool = false
     @State var isPrepTime: Bool = true
+    @State var ingredientName: String = ""
+    @State var ingredientUnitValue: String = "0"
+    @State var ingredientUnit: PantryModel.unitType = .cup
+    @State var ingredientsArray: Array<PantryModel.Ingredient> = [
+        PantryModel.Ingredient(name: "", value: 0, unit: .unit, status: .stocked, category: "", storePref: nil, recurring: false, expireDate: nil, isLiked: false)
+    ]
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -43,7 +49,38 @@ struct AddRecipeView: View {
                                     .padding(.vertical, 10)
                                     .padding(.horizontal)
                                     
-                               
+                                VStack {
+                                    Text("Add Ingredients")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .font(Font.body.bold())
+                                    ForEach(0..<self.ingredientsArray.count) { i in
+                                        HStack {
+                                            TextField("Enter the ingredient name", text: self.$ingredientsArray[i].name)
+                                                .font(Font.subheadline)
+                                                .padding(.vertical,5)
+                                                .padding(.horizontal)
+                                                .background(Color.white)
+                                                .cornerRadius(5)
+                                            quantityPicker(viewModel: self.viewModel,
+                                                           value: ,
+                                                           unit: self.$ingredientsArray[i].unit,
+                                                           showTitle: false)
+                                        }
+                                    }
+                                    Button(action: {
+                                        
+                                        self.ingredientsArray.append(PantryModel.Ingredient(name: "", value: 0, unit: .unit, status: .stocked, category: "", storePref: nil, recurring: false, expireDate: nil, isLiked: false))
+                                    }) {
+                                        HStack {
+                                            Image(systemName: "plus")
+                                            Text("Add Ingredient")
+                                        }
+                                            .frame(maxWidth: .infinity, alignment: .leading).foregroundColor(Color.green)
+                                    }
+                                    
+                                }
+                                .padding(.vertical, 5)
+                                .padding(.horizontal)
                                 Button(action: {
                                    
                                     
@@ -80,6 +117,7 @@ struct AddRecipeView: View {
                         .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
                     if showPicker {
                         hoursAndMinPicker(prepTime: self.$prepTime, cookTime: self.$cookTime, showPicker: self.$showPicker, isPrepTime: self.$isPrepTime)
+                        
                     }
                 }
         }
