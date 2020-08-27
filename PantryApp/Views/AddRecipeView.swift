@@ -27,79 +27,61 @@ struct AddRecipeView: View {
     }
     var body: some View {
             return NavigationView {
-                ScrollView {
-                    ZStack {
-                        VStack {
-                            Spacer(minLength: 60).fixedSize()
-                            nameTextField(ingredientName: $recipeName)
-                                .padding(.vertical, 5)
-                                .padding(.horizontal)
-                            statusSelection(viewModel: viewModel, currentStatus: $recipeType, showFull: true)
-                                .padding(.vertical, 5)
-                                .padding(.horizontal)
-                                
-                            prepAndCookTimeDisplay(prepTime: self.$prepTime, cookTime: self.$cookTime, showPicker: self.$showPicker, isPrepTime: self.$isPrepTime)
-                                .padding(.vertical, 10)
-                                .padding(.horizontal)
-                                
-                            if showPicker {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 14).foregroundColor(Color.themeForeground)
-                                    VStack(spacing: 0) {
-                                        Text("Pick Prep Time")
-                                            .padding(.top)
-                                            .font(Font.system(size: 18)
-                                            .weight(.semibold))
-                                            .foregroundColor(Color.black)
-                                        DurationPicker(duration: $prepTime)
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 6)
-                                            .foregroundColor(Color.grayBox)
-                                            Text("No Prep Time")
-                                                    .foregroundColor(Color.black)
-                                                    .padding(10)
-                                        }
-                                            .padding()
-                                    }
-                                        .labelsHidden()
-                                }
+                ZStack {
+                    ScrollView {
+                        ZStack {
+                            VStack {
+                                Spacer(minLength: 60).fixedSize()
+                                nameTextField(ingredientName: $recipeName)
+                                    .padding(.vertical, 5)
                                     .padding(.horizontal)
-                            }
-                            
-                            Button(action: {
+                                statusSelection(viewModel: viewModel, currentStatus: $recipeType, showFull: true)
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal)
+                                    
+                                prepAndCookTimeDisplay(prepTime: self.$prepTime, cookTime: self.$cookTime, showPicker: self.$showPicker, isPrepTime: self.$isPrepTime)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal)
+                                    
                                
-                                
-                            }) {
-                            ZStack() {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .foregroundColor((acceptibleSubmission) ? Color.blue : Color.orange)
-                                    .frame(height: 35)
-                                    .padding()
-                                    .shadow(color: (acceptibleSubmission) ? Color.blue : Color.orange, radius: 2)
-                                Text("Continue")
-                                    .foregroundColor(Color.white)
-                                    .frame(alignment: .center)
-                               }
+                                Button(action: {
+                                   
+                                    
+                                }) {
+                                ZStack() {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .foregroundColor((acceptibleSubmission) ? Color.blue : Color.orange)
+                                        .frame(height: 35)
+                                        .padding()
+                                        .shadow(color: (acceptibleSubmission) ? Color.blue : Color.orange, radius: 2)
+                                    Text("Continue")
+                                        .foregroundColor(Color.white)
+                                        .frame(alignment: .center)
+                                   }
+                                }
                             }
+                            .background(Color.themeBackground)
                         }
-                        .background(Color.themeBackground)
+                    
+                    
                     }
-                    
-                    
+                    .overlay(fullHeader(ingredientName: "Add Recipe", isLiked: self.$isLiked), alignment: .top)
+                        .navigationBarTitle("Add Recipe", displayMode: .automatic)
+                        .navigationBarItems(leading: Button(action: {
+                            
+                        }) {
+                            Image(systemName: "chevron.left").font(.system(size: 20)).foregroundColor(Color.black)
+                        }, trailing: Button(action: {
+                            self.isLiked.toggle()
+                        }) {
+                            Image(systemName: (isLiked) ? "heart.fill" : "heart").font(.system(size: 20)).foregroundColor((isLiked) ? Color.red : Color.black)
+                        })
+                        .navigationBarHidden(true)
+                        .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
+                    if showPicker {
+                        hoursAndMinPicker(prepTime: self.$prepTime, cookTime: self.$cookTime, showPicker: self.$showPicker, isPrepTime: self.$isPrepTime)
+                    }
                 }
-                .overlay(fullHeader(ingredientName: "Add Recipe", isLiked: self.$isLiked), alignment: .top)
-                    .navigationBarTitle("Add Recipe", displayMode: .automatic)
-                    .navigationBarItems(leading: Button(action: {
-                        
-                    }) {
-                        Image(systemName: "chevron.left").font(.system(size: 20)).foregroundColor(Color.black)
-                    }, trailing: Button(action: {
-                        self.isLiked.toggle()
-                    }) {
-                        Image(systemName: (isLiked) ? "heart.fill" : "heart").font(.system(size: 20)).foregroundColor((isLiked) ? Color.red : Color.black)
-                    })
-                    .navigationBarHidden(true)
-                    .background(Color.themeBackground.edgesIgnoringSafeArea(.all))
         }
     }
 }

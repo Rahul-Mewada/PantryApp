@@ -51,7 +51,7 @@ struct prepAndCookTimeDisplay: View {
                        RoundedRectangle(cornerRadius: 6)
                            .frame(width: 88.46, height: 36)
                            .foregroundColor(Color.themeBackground)
-                       Text(format(duration: self.prepTime))
+                       Text(format(duration: self.cookTime))
                            .font(Font.system(size: 20))
                    }
                 }
